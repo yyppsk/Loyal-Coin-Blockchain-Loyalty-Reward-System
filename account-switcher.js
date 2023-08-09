@@ -1,22 +1,14 @@
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-// Convert token balance to points
-function convertToPoints(tokenBalance) {
-  // Conversion ratio: 1 FKC = 100 points
-  const conversionRatio = 100;
-  return tokenBalance / conversionRatio;
-}
-
-// Example: Get the latest block number
-web3.eth
-  .getBlockNumber()
-  .then((blockNumber) => {
-    console.log("Latest block number:", blockNumber);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
-
 document.addEventListener("DOMContentLoaded", async () => {
+  let provider;
+
+  if (typeof web3 !== "undefined") {
+    provider = web3.currentProvider;
+  } else {
+    alert("Please install MetaMask or use a compatible browser.");
+  }
+
+  const web3Instance = new Web3(provider);
+
   const contractAddress = "0x9d21D7f68237260A5F2Dd220F0c9c07e55A89ae6";
   const contractABI = [
     {
@@ -846,64 +838,108 @@ document.addEventListener("DOMContentLoaded", async () => {
       stateMutability: "nonpayable",
       type: "function",
     },
-  ]; // Replace with your contract's ABI
-
-  const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
-
+  ];
   const accounts = await web3.eth.getAccounts();
   const userAddress = accounts[0];
+  const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
+  async function updateBalance(userAddress) {
+    try {
+      const balance = await contractInstance.methods
+        .balanceOf(userAddress)
+        .call();
 
-  async function updateBalance() {
-    const balance = await contractInstance.methods
-      .balanceOf(userAddress)
-      .call();
-
-    // Convert the balance from wei to FKC format
-    const balanceInFKC = web3.utils.fromWei(balance, "ether");
-
-    //document.getElementById("balance").textContent = balanceInFKC;
+      // Convert the balance from wei to FKC format
+      const balanceInFKC = web3.utils.fromWei(balance, "ether");
+      document.getElementById("balance").textContent =
+        userAddress + balanceInFKC;
+    } catch (error) {
+      console.error("Error updating balance:", error);
+    }
   }
 
-  updateBalance();
+  updateBalance(userAddress);
 
   document.getElementById("earnButton").addEventListener("click", async () => {
-    const amountToEarn = 100; // Specify the amount of tokens to earn
-    await contractInstance.methods
-      .earnTokens(amountToEarn)
-      .send({ from: userAddress });
-    updateBalance();
+    try {
+      const amountToEarn = 100; // Specify the amount of tokens to earn
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const userAddress = accounts[0];
+      const txParams = {
+        to: contractAddress,
+        from: userAddress,
+        data: contractInstance.methods.earnTokens(amountToEarn).encodeABI(),
+      };
+
+      const txHash = await ethereum.request({
+        method: "eth_sendTransaction",
+        params: [txParams],
+      });
+      console.log("Earn transaction hash:", txHash);
+
+      updateBalance();
+    } catch (error) {
+      console.error("Error earning tokens:", error);
+    }
   });
 
   document
     .getElementById("redeemButton")
     .addEventListener("click", async () => {
-      const amountToRedeem = 50; // Specify the amount of tokens to redeem
-      await contractInstance.methods
-        .redeemTokens(amountToRedeem)
-        .send({ from: userAddress });
-      updateBalance();
+      try {
+        const amountToRedeem = 50; // Specify the amount of tokens to redeem
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const userAddress = accounts[0];
+        const txParams = {
+          to: contractAddress,
+          from: userAddress,
+          data: contractInstance.methods
+            .redeemTokens(amountToRedeem)
+            .encodeABI(),
+        };
+
+        const txHash = await ethereum.request({
+          method: "eth_sendTransaction",
+          params: [txParams],
+        });
+        console.log("Redeem transaction hash:", txHash);
+
+        updateBalance();
+      } catch (error) {
+        console.error("Error redeeming tokens:", error);
+      }
     });
 
   document
     .getElementById("transferButton")
     .addEventListener("click", async () => {
-      const toAddress = document.getElementById("toAddress").value;
-      const amount = document.getElementById("transferAmount").value;
+      try {
+        const toAddress = document.getElementById("toAddress").value;
+        const amount = document.getElementById("transferAmount").value;
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const userAddress = accounts[0];
+        const txParams = {
+          to: contractAddress,
+          from: userAddress,
+          data: contractInstance.methods
+            .transfer(toAddress, amount)
+            .encodeABI(),
+        };
 
-      await contractInstance.methods
-        .transfer(toAddress, amount)
-        .send({ from: userAddress });
-      updateBalance();
+        const txHash = await ethereum.request({
+          method: "eth_sendTransaction",
+          params: [txParams],
+        });
+        console.log("Transfer transaction hash:", txHash);
+
+        updateBalance();
+      } catch (error) {
+        console.error("Error transferring tokens:", error);
+      }
     });
 });
-/* 
-contractInstance.methods.balanceOf("
-0xFb711699531E44B37e3dE5259Ca1fe95d3bE9f6b").call()
-  .then(balance => {
-    console.log("Account 2 FKC balance:", balance);
-  })
-  .catch(error => {
-    console.error("Error:", error);
-  });
-
-*/
