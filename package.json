@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/contracts": "^4.9.3",
+    "crypto-js": "^4.1.1",
+    "npm-check-updates": "^16.10.18",
+    "web3": "^4.0.3"
+  },
+  "name": "flipkart-grid",
+  "version": "1.0.0",
+  "description": "hackathon",
+  "main": "blockchain.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pranjal",
+  "license": "ISC"
+}
