@@ -948,8 +948,7 @@
 
             // Convert the balance from wei to FKC format
             const balanceInFKC = web3.utils.fromWei(balance, "ether");
-            document.getElementById("balance").textContent =
-              userAddress + balanceInFKC;
+            document.getElementById("balance").textContent = balanceInFKC;
             //Displaying who's logged in via metamask
             document.getElementById("loggedin").textContent = userAddress;
           } catch (error) {
