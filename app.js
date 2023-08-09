@@ -1,11 +1,23 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  if (typeof web3 !== "undefined") {
-    web3 = new Web3(web3.currentProvider);
-  } else {
-    alert("Please install MetaMask or use a compatible browser.");
-  }
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+// Convert token balance to points
+function convertToPoints(tokenBalance) {
+  // Conversion ratio: 1 FKC = 100 points
+  const conversionRatio = 100;
+  return tokenBalance / conversionRatio;
+}
 
-  const contractAddress = "0x6f1014E9C59F284e67cdD7C815E58D46061e40a6";
+// Example: Get the latest block number
+web3.eth
+  .getBlockNumber()
+  .then((blockNumber) => {
+    console.log("Latest block number:", blockNumber);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const contractAddress = "0x9d21D7f68237260A5F2Dd220F0c9c07e55A89ae6";
   const contractABI = [
     {
       inputs: [],
@@ -145,6 +157,44 @@ document.addEventListener("DOMContentLoaded", async () => {
         },
       ],
       name: "RoleRevoked",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "TokensEarned",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "TokensRedeemed",
       type: "event",
     },
     {
@@ -770,6 +820,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       stateMutability: "nonpayable",
       type: "function",
     },
+    {
+      inputs: [
+        {
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "earnTokens",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        {
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "redeemTokens",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
   ]; // Replace with your contract's ABI
 
   const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
@@ -781,20 +857,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     const balance = await contractInstance.methods
       .balanceOf(userAddress)
       .call();
-    document.getElementById("balance").textContent = balance;
+
+    // Convert the balance from wei to FKC format
+    const balanceInFKC = web3.utils.fromWei(balance, "ether");
+
+    document.getElementById("balance").textContent = balanceInFKC;
   }
 
   updateBalance();
 
   document.getElementById("earnButton").addEventListener("click", async () => {
-    await contractInstance.methods.earnTokens().send({ from: userAddress });
+    const amountToEarn = 100; // Specify the amount of tokens to earn
+    await contractInstance.methods
+      .earnTokens(amountToEarn)
+      .send({ from: userAddress });
     updateBalance();
   });
 
   document
     .getElementById("redeemButton")
     .addEventListener("click", async () => {
-      await contractInstance.methods.redeemTokens().send({ from: userAddress });
+      const amountToRedeem = 50; // Specify the amount of tokens to redeem
+      await contractInstance.methods
+        .redeemTokens(amountToRedeem)
+        .send({ from: userAddress });
       updateBalance();
     });
 
