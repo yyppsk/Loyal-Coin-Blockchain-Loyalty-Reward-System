@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brand Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+    />
+
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <div class="container mx-auto mt-10">
+      <h1 class="text-2xl font-bold mb-6">Brand Login</h1>
+      <form id="loginForm" class="max-w-md mx-auto">
+        <div class="mb-4">
+          <label for="brandName" class="block mb-1">Brand Name:</label>
+          <input
+            type="text"
+            id="brandName"
+            class="w-full p-2 border rounded"
+            required
+          />
+        </div>
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
+          Login
+        </button>
+      </form>
+    </div>
+    <script src="./login.js"></script>
+  </body>
+</html>

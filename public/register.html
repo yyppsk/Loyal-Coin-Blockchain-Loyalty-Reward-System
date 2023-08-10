@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brand Registration</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="container mx-auto mt-10">
+      <h1 class="text-2xl font-bold mb-6">Brand Registration</h1>
+      <form id="registrationForm" class="w-1/2">
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="brandName"
+            >Brand Name</label
+          >
+          <input
+            id="brandName"
+            name="brandName"
+            type="text"
+            required
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="logo"
+            >Brand Logo</label
+          >
+          <input id="logo" name="logo" type="file" accept="image/*" required />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="programDetails"
+            >Program Details</label
+          >
+          <textarea
+            id="programDetails"
+            name="programDetails"
+            required
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          ></textarea>
+        </div>
+        <button
+          id="registerButton"
+          type="submit"
+          class="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+    <script src="./register.js"></script>
+  </body>
+</html>

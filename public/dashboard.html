@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brand Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <div class="container mx-auto mt-10">
+      <header class="mb-6">
+        <img
+          id="brandLogo"
+          src=""
+          alt="Brand Logo"
+          class="max-w-md mx-auto mb-2"
+        />
+      </header>
+      <h1 class="text-2xl font-bold mb-4">Brand Dashboard</h1>
+      <div id="programDetails" class="mb-4"></div>
+      <div id="tokenBalance" class="mb-4">
+        Token Balance: <span id="balance">0</span>
+      </div>
+      <button
+        id="customizeButton"
+        class="bg-blue-500 text-white py-2 px-4 rounded"
+      >
+        Customize Program
+      </button>
+    </div>
+    <script src="./dashboard.js"></script>
+  </body>
+</html>

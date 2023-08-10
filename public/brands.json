@@ -1,0 +1,14 @@
+{
+  "Amazon": {
+    "logoPath": "/assets/Amazon/amazonlogo.png",
+    "programDetails": "Amazon"
+  },
+  "Snapdeal": {
+    "logoPath": "/assets/Snapdeal/Snapdeal_Logo_new.png",
+    "programDetails": "Snap deal stuff"
+  },
+  "Wallmart": {
+    "logoPath": "/assets/Wallmart/wallmart.webp",
+    "programDetails": "Wallmart global"
+  }
+}
