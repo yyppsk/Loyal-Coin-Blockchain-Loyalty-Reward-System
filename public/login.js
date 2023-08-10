@@ -2,20 +2,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const brandName = document.getElementById("brandName").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     // Load brand data from the local JSON file (temporary database)
     const response = await fetch("brands.json");
     const brands = await response.json();
 
-    // Check if the brand exists
-    if (brands[brandName]) {
-      // Redirect to brand dashboard page
-      window.location.href = `dashboard.html?brand=${encodeURIComponent(
-        brandName
-      )}`;
+    //console.log("Loaded brands:", brands);
+
+    // Check if the email exists and password matches
+    const brand = Object.values(brands).find((brand) => brand.email === email);
+    //console.log("Selected brand:", brand);
+
+    if (brand && brand.password === password) {
+      // Redirect to brand dashboard page with brand and email parameters
+      const queryParams = new URLSearchParams();
+      queryParams.append("brand", brand.branding);
+      queryParams.append("email", email);
+      const queryString = queryParams.toString();
+      const dashboardUrl = `dashboard.html?${queryString}`;
+      window.location.href = dashboardUrl;
     } else {
-      alert("Brand not found. Please register.");
+      alert("Invalid email or password.");
     }
   });
 });

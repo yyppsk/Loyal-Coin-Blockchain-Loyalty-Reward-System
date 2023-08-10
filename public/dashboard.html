@@ -18,17 +18,37 @@
           class="max-w-md mx-auto mb-2"
         />
       </header>
-      <h1 class="text-2xl font-bold mb-4">Brand Dashboard</h1>
-      <div id="programDetails" class="mb-4"></div>
+      <h1 class="text-2xl font-bold mb-4" id="brandName">Brand Name</h1>
+      <div class="mb-4">
+        <p id="representativeName">Brand Representative: John Doe</p>
+        <p id="programDetails">
+          Program Details: Lorem ipsum dolor sit amet, consectetur adipiscing
+          elit.
+        </p>
+      </div>
       <div id="tokenBalance" class="mb-4">
         Token Balance: <span id="balance">0</span>
       </div>
-      <button
-        id="customizeButton"
-        class="bg-blue-500 text-white py-2 px-4 rounded"
-      >
-        Customize Program
-      </button>
+      <div class="flex space-x-4">
+        <button
+          id="customizeButton"
+          class="bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Customize Program
+        </button>
+        <button
+          id="rewardButton"
+          class="bg-green-500 text-white py-2 px-4 rounded"
+        >
+          Reward Customers
+        </button>
+        <button
+          id="redeemButton"
+          class="bg-purple-500 text-white py-2 px-4 rounded"
+        >
+          Redeem Tokens
+        </button>
+      </div>
     </div>
     <script src="./dashboard.js"></script>
   </body>

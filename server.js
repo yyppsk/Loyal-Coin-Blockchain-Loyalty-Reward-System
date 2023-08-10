@@ -22,21 +22,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.use(express.json()); // Add this middleware to parse JSON requests
+
 app.post("/register", upload.single("logo"), (req, res) => {
   const brandName = req.body.brandName;
-  const programDetails = req.body.programDetails;
+  const representativeName = req.body.representativeName;
+  const logoPath = `/assets/${brandName}/${req.file.filename}`;
+  const email = req.body.email;
+  const password = req.body.password;
 
   // Update JSON file
   const brandsPath = path.join(__dirname, "public/brands.json");
   let brandsData = {};
+
   if (fs.existsSync(brandsPath)) {
-    const brandsFile = fs.readFileSync(brandsPath);
-    brandsData = JSON.parse(brandsFile);
+    const brandsFile = fs.readFileSync(brandsPath, "utf8");
+    if (brandsFile.trim() !== "") {
+      brandsData = JSON.parse(brandsFile);
+    }
   }
+
   brandsData[brandName] = {
-    logoPath: `/assets/${brandName}/${req.file.filename}`,
-    programDetails,
+    branding: brandName, // Add the branding property
+    logoPath,
+    representativeName,
+    email,
+    password,
   };
+
   fs.writeFileSync(brandsPath, JSON.stringify(brandsData, null, 2));
 
   res.sendStatus(200);
