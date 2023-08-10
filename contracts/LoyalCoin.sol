@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
-contract Flipkartcoin is ERC20, ERC20Burnable, Pausable, AccessControl, ERC20Permit {
+contract LoyalCoin is ERC20, ERC20Burnable, Pausable, AccessControl, ERC20Permit {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
@@ -15,7 +15,7 @@ contract Flipkartcoin is ERC20, ERC20Burnable, Pausable, AccessControl, ERC20Per
     event TokensEarned(address indexed account, uint256 amount);
     event TokensRedeemed(address indexed account, uint256 amount);
 
-    constructor() ERC20("flipkartcoin", "FKC") ERC20Permit("flipkartcoin") {
+    constructor() ERC20("LoyalCoin", "LCS") ERC20Permit("LoyalCoin") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
         _mint(msg.sender, 420420420420 * 10 ** decimals());

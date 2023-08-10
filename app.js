@@ -17,7 +17,17 @@ web3.eth
   });
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const contractAddress = "0x9d21D7f68237260A5F2Dd220F0c9c07e55A89ae6";
+  let provider;
+
+  if (typeof web3 !== "undefined") {
+    provider = web3.currentProvider;
+  } else {
+    alert("Please install MetaMask or use a compatible browser.");
+  }
+
+  const web3Instance = new Web3(provider);
+
+  const contractAddress = "0xbA1DC9d7A26F2a81625eBD5f34Bb3EBfE6B30D87";
   const contractABI = [
     {
       inputs: [],
@@ -847,54 +857,124 @@ document.addEventListener("DOMContentLoaded", async () => {
       type: "function",
     },
   ]; // Replace with your contract's ABI
-
-  const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
-
-  const accounts = await web3.eth.getAccounts();
+  const accounts = await ethereum.request({
+    method: "eth_requestAccounts",
+  });
   const userAddress = accounts[0];
+  const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
+  async function updateBalance(userAddress) {
+    try {
+      const balance = await contractInstance.methods
+        .balanceOf(userAddress)
+        .call();
 
-  async function updateBalance() {
-    const balance = await contractInstance.methods
-      .balanceOf(userAddress)
-      .call();
-
-    // Convert the balance from wei to FKC format
-    const balanceInFKC = web3.utils.fromWei(balance, "ether");
-
-    //document.getElementById("balance").textContent = balanceInFKC;
+      // Convert the balance from wei to FKC format
+      const balanceInFKC = web3.utils.fromWei(balance, "ether");
+      document.getElementById("balance").textContent = balanceInFKC;
+      //Displaying who's logged in via metamask
+      document.getElementById("loggedin").textContent = userAddress;
+    } catch (error) {
+      console.error("Error updating balance:", error);
+    }
   }
 
-  updateBalance();
+  updateBalance(userAddress);
 
   document.getElementById("earnButton").addEventListener("click", async () => {
-    const amountToEarn = 100; // Specify the amount of tokens to earn
-    await contractInstance.methods
-      .earnTokens(amountToEarn)
-      .send({ from: userAddress });
-    updateBalance();
+    try {
+      const amountToEarn = 100; // Specify the amount of tokens to earn
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const userAddress = accounts[0];
+      const txParams = {
+        to: contractAddress,
+        from: userAddress,
+        data: contractInstance.methods.earnTokens(amountToEarn).encodeABI(),
+      };
+
+      const txHash = await ethereum.request({
+        method: "eth_sendTransaction",
+        params: [txParams],
+      });
+      console.log("Earn transaction hash:", txHash);
+
+      updateBalance();
+    } catch (error) {
+      console.error("Error earning tokens:", error);
+    }
   });
 
   document
     .getElementById("redeemButton")
     .addEventListener("click", async () => {
-      const amountToRedeem = 50; // Specify the amount of tokens to redeem
-      await contractInstance.methods
-        .redeemTokens(amountToRedeem)
-        .send({ from: userAddress });
-      updateBalance();
+      try {
+        const amountToRedeem = 50; // Specify the amount of tokens to redeem
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const userAddress = accounts[0];
+        const txParams = {
+          to: contractAddress,
+          from: userAddress,
+          data: contractInstance.methods
+            .redeemTokens(amountToRedeem)
+            .encodeABI(),
+        };
+
+        const txHash = await ethereum.request({
+          method: "eth_sendTransaction",
+          params: [txParams],
+        });
+        console.log("Redeem transaction hash:", txHash);
+
+        updateBalance();
+      } catch (error) {
+        console.error("Error redeeming tokens:", error);
+      }
     });
 
   document
     .getElementById("transferButton")
     .addEventListener("click", async () => {
-      const toAddress = document.getElementById("toAddress").value;
-      const amount = document.getElementById("transferAmount").value;
+      try {
+        const toAddress = document.getElementById("toAddress").value;
+        const amount = document.getElementById("transferAmount").value;
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const userAddress = accounts[0];
+        const txParams = {
+          to: contractAddress,
+          from: userAddress,
+          data: contractInstance.methods
+            .transfer(toAddress, amount)
+            .encodeABI(),
+        };
 
-      await contractInstance.methods
-        .transfer(toAddress, amount)
-        .send({ from: userAddress });
-      updateBalance();
+        const txHash = await ethereum.request({
+          method: "eth_sendTransaction",
+          params: [txParams],
+        });
+        console.log("Transfer transaction hash:", txHash);
+
+        updateBalance();
+      } catch (error) {
+        console.error("Error transferring tokens:", error);
+      }
     });
+
+  if (!isReturningUser) {
+    // Runs only if they are brand new, or have hit the disconnect button
+    await window.ethereum.request({
+      method: "wallet_requestPermissions",
+      params: [
+        {
+          eth_accounts: {},
+        },
+      ],
+    });
+  }
 });
 /* 
 contractInstance.methods.balanceOf("
