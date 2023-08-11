@@ -1,36 +1,25 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const brandLogo = document.getElementById("brandLogo");
   const brandNameHeading = document.getElementById("brandName");
-  const balanceSpan = document.getElementById("balance");
+  const representativeName = document.getElementById("representativeName");
   const customizeButton = document.getElementById("customizeButton");
   const rewardButton = document.getElementById("rewardButton");
   const redeemButton = document.getElementById("redeemButton");
-  const representativeName = document.getElementById("representativeName");
+  const Brand = require("./models/Brand");
+  // Fetch brand representative and brand data from the server
+  try {
+    const response = await fetch("http://localhost:3000/api/dashboard", {
+      method: "GET",
+      credentials: "include", // Include cookies for session management
+    });
 
-  // Retrieve email from URL parameter
-  const urlParams = new URLSearchParams(window.location.search);
-  const email = urlParams.get("email");
-
-  // Load brand data from the local JSON file (temporary database)
-  fetch("./brands.json")
-    .then((response) => response.json())
-    .then((brands) => {
-      let brandName = null;
-
-      // Find the brand that matches the provided email
-      for (const [key, value] of Object.entries(brands)) {
-        if (value.email === email) {
-          brandName = key;
-          break;
-        }
-      }
-
-      if (brandName) {
-        const brandData = brands[brandName];
-        // Display brand details
-        brandLogo.src = brandData.logoPath;
-        brandNameHeading.textContent = brandName;
-        representativeName.textContent = `${brandData.representativeName}`; // Assuming the key is "representativeName" in brands.json
+    if (response.ok) {
+      const data = await response.json();
+      if (data) {
+        // Display brand representative and brand details
+        brandLogo.src = data.brand.logo_path;
+        brandNameHeading.textContent = data.brand.name;
+        representativeName.textContent = data.representative.name;
 
         customizeButton.addEventListener("click", () => {
           // Redirect to customization page or perform customization actions
@@ -44,7 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
           // Redirect to redeem page or perform redeem actions
         });
       } else {
-        alert("Brand not found for the provided email.");
+        alert("Brand representative data not found.");
       }
-    });
+    } else {
+      alert("Error fetching brand representative data.");
+    }
+  } catch (error) {
+    console.error("Error fetching brand representative:", error);
+    alert("An error occurred during data fetching.");
+  }
 });

@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const brandName = registrationForm.brandName.value;
     const logoFile = registrationForm.logo.files[0];
-    console.log(logoFile);
     const name = registrationForm.name.value;
     const email = registrationForm.email.value;
     const password = registrationForm.pass.value;
@@ -26,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         alert("Registration successful!");
+        // You can customize the URL structure based on your requirements
         window.location.href = `./dashboard.html?brand=${brandName}&email=${email}`;
       } else {
         alert("Registration failed. Please try again.");

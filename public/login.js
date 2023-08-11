@@ -5,26 +5,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    // Load brand data from the local JSON file (temporary database)
-    const response = await fetch("brands.json");
-    const brands = await response.json();
+    try {
+      // Send login credentials to the server for verification
+      const response = await fetch("http://localhost:3000/api/brandlogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+        credentials: "include", // Include cookies for session management
+      });
 
-    //console.log("Loaded brands:", brands);
+      if (response.ok) {
+        const data = await response.json();
+        const brandName = data.brand ? data.brand.name : ""; // Get brand name from the response
 
-    // Check if the email exists and password matches
-    const brand = Object.values(brands).find((brand) => brand.email === email);
-    //console.log("Selected brand:", brand);
-
-    if (brand && brand.password === password) {
-      // Redirect to brand dashboard page with brand and email parameters
-      const queryParams = new URLSearchParams();
-      queryParams.append("brand", brand.branding);
-      queryParams.append("email", email);
-      const queryString = queryParams.toString();
-      const dashboardUrl = `dashboard.html?${queryString}`;
-      window.location.href = dashboardUrl;
-    } else {
-      alert("Invalid email or password.");
+        // Redirect to brand dashboard page with brand and email parameters
+        const queryParams = new URLSearchParams();
+        queryParams.append("brand", brandName);
+        queryParams.append("email", email);
+        const queryString = queryParams.toString();
+        const dashboardUrl = `dashboard.html?${queryString}`;
+        window.location.href = dashboardUrl;
+      } else {
+        alert("Invalid email or password.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred during login.");
     }
   });
 });
