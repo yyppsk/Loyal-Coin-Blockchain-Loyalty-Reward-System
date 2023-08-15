@@ -1,17 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+document.addEventListener("DOMContentLoaded", async () => {
+  // Check if MetaMask is installed
+  if (typeof window.ethereum !== "undefined") {
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const userAddress = accounts[0];
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+    // Update logged-in user
+    document.getElementById("loggedin").textContent = userAddress;
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    // Fetch and update balance using app.js logic
+    updateBalance(userAddress);
+  } else {
+    alert("Please install MetaMask or use a compatible browser.");
+  }
+});

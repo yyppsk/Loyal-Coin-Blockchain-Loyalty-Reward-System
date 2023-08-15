@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <style>
+      .mobile-menu {
+        display: none;
+      }
+      .wrapper {
+        display: grid;
+        justify-content: center;
+        padding: 4rem;
+      }
+      .fade-in {
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+      }
+    </style>
+    <div
+      class="bg-gray-50 relative isolate flex items-center gap-x-6 overflow-hidden px-6 py-2.5 sm:px-3.5 sm:before:flex-1"
+    >
+      <div
+        class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
+        aria-hidden="true"
+      >
+        <div
+          class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+          style="
+            clip-path: polygon(
+              74.8% 41.9%,
+              97.2% 73.2%,
+              100% 34.9%,
+              92.5% 0.4%,
+              87.5% 0%,
+              75% 28.6%,
+              58.5% 54.6%,
+              50.1% 56.8%,
+              46.9% 44%,
+              48.3% 17.4%,
+              24.7% 53.9%,
+              0% 27.9%,
+              11.9% 74.2%,
+              24.9% 54.1%,
+              68.6% 100%,
+              74.8% 41.9%
+            );
+          "
+        ></div>
+      </div>
+      <div
+        class="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
+        aria-hidden="true"
+      >
+        <div
+          class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+          style="
+            clip-path: polygon(
+              74.8% 41.9%,
+              97.2% 73.2%,
+              100% 34.9%,
+              92.5% 0.4%,
+              87.5% 0%,
+              75% 28.6%,
+              58.5% 54.6%,
+              50.1% 56.8%,
+              46.9% 44%,
+              48.3% 17.4%,
+              24.7% 53.9%,
+              0% 27.9%,
+              11.9% 74.2%,
+              24.9% 54.1%,
+              68.6% 100%,
+              74.8% 41.9%
+            );
+          "
+        ></div>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <p class="text-gray-900 text-sm leading-6">
+          <strong class="font-semibold">Flipkart Grid 2023</strong
+          ><svg
+            viewBox="0 0 2 2"
+            class="mx-2 inline h-0.5 w-0.5 fill-current"
+            aria-hidden="true"
+          >
+            <circle cx="1" cy="1" r="1" /></svg
+          >Join us in Flipkart GRiD 5.0 from 8 Aug 23.
+        </p>
+        <a
+          href="https://unstop.com/hackathons/flipkart-grid-50-software-development-track-flipkart-grid-50-flipkart-686157"
+          class="bg-gray-900 hover:bg-gray-700 focus-visible:outline-gray-900 flex-none rounded-full px-3.5 py-1 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          >Register now <span aria-hidden="true">&rarr;</span></a
+        >
+      </div>
+      <div class="flex flex-1 justify-end">
+        <button
+          type="button"
+          class="-m-3 p-3 focus-visible:outline-offset-[-4px]"
+        >
+          <span class="sr-only">Dismiss</span>
+          <svg
+            class="text-gray-900 h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- NAVNBAR START-->
+
+    <header class="bg-white">
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">Your Company</span>
+            <img
+              class="h-8 w-auto"
+              src="./images/interface/logo_panel.png"
+              alt=""
+            />
+          </a>
+        </div>
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="text-gray-700 -m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <div class="relative">
+            <button
+              data-dropdown-toggle="prod"
+              data-dropdown-placement="bottom"
+              type="button"
+              class="text-gray-900 flex items-center gap-x-1 text-sm font-semibold leading-6"
+              aria-expanded="false"
+            >
+              Product
+              <svg
+                class="text-gray-400 h-5 w-5 flex-none"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <!--
+              'Product' flyout menu, show/hide based on flyout menu state.
+    
+              Entering: "transition ease-out duration-200"
+                From: "opacity-0 translate-y-1"
+                To: "opacity-100 translate-y-0"
+              Leaving: "transition ease-in duration-150"
+                From: "opacity-100 translate-y-0"
+                To: "opacity-0 translate-y-1"
+            -->
+
+            <div
+              class="ring-gray-900/5 fade-in absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1"
+              id="prod"
+            >
+              <div class="p-4">
+                <div
+                  class="hover:bg-gray-50 group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
+                >
+                  <div
+                    class="bg-gray-50 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:bg-white"
+                  >
+                    <svg
+                      class="text-gray-600 group-hover:text-indigo-600 h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-auto">
+                    <a href="#" class="text-gray-900 block font-semibold">
+                      Analytics
+                      <span class="absolute inset-0"></span>
+                    </a>
+                    <p class="text-gray-600 mt-1">
+                      Get a better understanding of your traffic
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="hover:bg-gray-50 group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
+                >
+                  <div
+                    class="bg-gray-50 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:bg-white"
+                  >
+                    <svg
+                      class="text-gray-600 group-hover:text-indigo-600 h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-auto">
+                    <a href="#" class="text-gray-900 block font-semibold">
+                      Engagement
+                      <span class="absolute inset-0"></span>
+                    </a>
+                    <p class="text-gray-600 mt-1">
+                      Speak directly to your customers
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="hover:bg-gray-50 group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
+                >
+                  <div
+                    class="bg-gray-50 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:bg-white"
+                  >
+                    <svg
+                      class="text-gray-600 group-hover:text-indigo-600 h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-auto">
+                    <a href="#" class="text-gray-900 block font-semibold">
+                      Security
+                      <span class="absolute inset-0"></span>
+                    </a>
+                    <p class="text-gray-600 mt-1">
+                      Your customers'data will be safe and secure
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="hover:bg-gray-50 group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
+                >
+                  <div
+                    class="bg-gray-50 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:bg-white"
+                  >
+                    <svg
+                      class="text-gray-600 group-hover:text-indigo-600 h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-auto">
+                    <a href="#" class="text-gray-900 block font-semibold">
+                      Integrations
+                      <span class="absolute inset-0"></span>
+                    </a>
+                    <p class="text-gray-600 mt-1">
+                      Connect with third-party tools
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="hover:bg-gray-50 group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6"
+                >
+                  <div
+                    class="bg-gray-50 flex h-11 w-11 flex-none items-center justify-center rounded-lg group-hover:bg-white"
+                  >
+                    <svg
+                      class="text-gray-600 group-hover:text-indigo-600 h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                      />
+                    </svg>
+                  </div>
+                  <div class="flex-auto">
+                    <a href="#" class="text-gray-900 block font-semibold">
+                      Automations
+                      <span class="absolute inset-0"></span>
+                    </a>
+                    <p class="text-gray-600 mt-1">
+                      Build strategic funnels that will convert
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="divide-gray-900/5 bg-gray-50 grid grid-cols-2 divide-x"
+              >
+                <a
+                  href="#"
+                  class="text-gray-900 hover:bg-gray-100 flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6"
+                >
+                  <svg
+                    class="text-gray-400 h-5 w-5 flex-none"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm6.39-2.908a.75.75 0 01.766.027l3.5 2.25a.75.75 0 010 1.262l-3.5 2.25A.75.75 0 018 12.25v-4.5a.75.75 0 01.39-.658z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Watch demo
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-900 hover:bg-gray-100 flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6"
+                >
+                  <svg
+                    class="text-gray-400 h-5 w-5 flex-none"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Contact sales
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="text-gray-900 text-sm font-semibold leading-6"
+            >Features</a
+          >
+          <a href="#" class="text-gray-900 text-sm font-semibold leading-6"
+            >Marketplace</a
+          >
+          <a href="#" class="text-gray-900 text-sm font-semibold leading-6"
+            >Company</a
+          >
+        </div>
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div class="lg:hidden" role="dialog" aria-modal="true">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-10"></div>
+        <div
+          id="mobile-menu"
+          class="sm:ring-gray-900/10 fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">Your Company</span>
+              <img
+                class="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                alt=""
+              />
+            </a>
+            <button
+              type="button"
+              id="cross"
+              class="text-gray-700 -m-2.5 rounded-md p-2.5"
+            >
+              <span class="sr-only" id="cross">Close menu</span>
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="divide-gray-500/10 -my-6 divide-y">
+              <div class="space-y-2 py-6">
+                <div class="-mx-3">
+                  <button
+                    type="button"
+                    class="text-gray-900 hover:bg-gray-50 flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7"
+                    aria-controls="disclosure-1"
+                    aria-expanded="false"
+                  >
+                    Product
+                    <!--
+                      Expand/collapse icon, toggle classes based on menu open state.
+    
+                      Open: "rotate-180", Closed: ""
+                    -->
+                    <svg
+                      class="h-5 w-5 flex-none"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <!-- 'Product' sub-menu, show/hide based on menu state. -->
+                  <div class="mt-2 space-y-2" id="disclosure-1">
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Analytics</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Engagement</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Security</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Integrations</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Automations</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Watch demo</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-50 block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7"
+                      >Contact sales</a
+                    >
+                  </div>
+                </div>
+                <a
+                  href="#"
+                  class="text-gray-900 hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                  >Features</a
+                >
+                <a
+                  href="#"
+                  class="text-gray-900 hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                  >Marketplace</a
+                >
+                <a
+                  href="#"
+                  class="text-gray-900 hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                  >Company</a
+                >
+              </div>
+              <div class="py-6">
+                <a
+                  href="#"
+                  class="text-gray-900 hover:bg-gray-50 -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
+                  >Log in</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--NAVBAR END-->
+
+    <div class="wrapper">
+      <div class="mx-auto max-w-7xl p-6">
+        <div class="overflow-hidden rounded-lg bg-white shadow-md">
+          <div class="p-6">
+            <h2 class="mb-4 text-3xl font-semibold">
+              Welcome back,
+              <div id="dashboardData" class="grid grid-cols-1 gap-4"></div>
+            </h2>
+            <p class="text-gray-600 mb-4 text-lg">
+              We're glad to see you again. Here's what's new:
+            </p>
+            <ul class="text-gray-600 mb-4 list-inside list-disc text-lg"></ul>
+            <button
+              class="from-purple-400 via-pink-500 to-red-500 hover:from-pink-500 hover:via-purple-400 hover:to-red-400 rounded-lg bg-gradient-to-r py-3 px-6 text-lg font-semibold text-white"
+              onclick="handleClick()"
+            >
+              Explore Now
+            </button>
+
+            <script>
+              function handleClick() {
+                window.location.href = "http://localhost:3000/";
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+    </div>
+    <div class="overflow-hidden bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2"
+        >
+          <div class="lg:pr-8 lg:pt-4">
+            <div class="lg:max-w-lg">
+              <h2 class="text-indigo-600 text-base font-semibold leading-7">
+                Reward Customers the right way
+              </h2>
+              <p
+                class="text-gray-900 mt-2 text-3xl font-bold tracking-tight sm:text-4xl"
+              >
+                Stunning Work Enviornment
+              </p>
+              <p class="text-gray-600 mt-6 text-lg leading-8">
+                Empower Your Transactions: Connecting Customers and Brands with
+                Trust on the LoyalCoin Blockchain Tokens.
+              </p>
+              <dl
+                class="text-gray-600 mt-10 max-w-xl space-y-8 text-base leading-7 lg:max-w-none"
+              >
+                <div class="relative pl-9">
+                  <dt class="text-gray-900 inline font-semibold">
+                    <svg
+                      class="text-indigo-600 absolute left-1 top-1 h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    Easy Setup.
+                  </dt>
+                  <dd class="inline">
+                    With Seamless Account Setup, Effortlessly Launch Your
+                    Ecommerce Presence with our Quick and Easy Solution.
+                  </dd>
+                </div>
+                <div class="relative pl-9">
+                  <dt class="text-gray-900 inline font-semibold">
+                    <svg
+                      class="text-indigo-600 absolute left-1 top-1 h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    SSL certificates.
+                  </dt>
+                  <dd class="inline">
+                    Hardened with Blockchain Transactions That Ensures
+                    Everything is secured With Web3 Space.
+                  </dd>
+                </div>
+                <div class="relative pl-9">
+                  <dt class="text-gray-900 inline font-semibold">
+                    <svg
+                      class="text-indigo-600 absolute left-1 top-1 h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    Data Tracking.
+                  </dt>
+                  <dd class="inline">
+                    Hardened with Strong Database solutions, keep track of your
+                    inventories & balances.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <img
+            src="./images/interface/Ui_Screenshot.webp"
+            alt="Product screenshot"
+            class="ring-gray-400/10 w-[48rem] max-w-none rounded-xl shadow-xl ring-1 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+            width="2432"
+            height="1442"
+          />
+        </div>
+      </div>
+    </div>
+
+    <script src="./dashboard.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const fadeInDiv = document.getElementById("prod");
+
+        // Trigger the fade-in effect
+        fadeInDiv.style.opacity = "1";
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.getElementById("cross");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", function () {
+          mobileMenu.classList.toggle("hidden");
+        });
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+  </body>
+</html>
