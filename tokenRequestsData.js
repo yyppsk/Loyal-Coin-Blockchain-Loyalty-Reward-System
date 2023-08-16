@@ -56,4 +56,26 @@ router.get("/getRequestsPerDay", async (req, res) => {
   }
 });
 
+router.get("/getRequestsTotal", async (req, res) => {
+  try {
+    const query = `
+      SELECT COUNT(*) AS total_requests
+      FROM tokenrequests
+    `;
+    const result = await pool.query(query);
+    const totalRequests = result.rows[0].total_requests;
+
+    res.json({
+      success: true,
+      requestsTotal: totalRequests,
+    });
+  } catch (error) {
+    console.error("Error fetching total requests:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch total requests.",
+    });
+  }
+});
+
 module.exports = router;
