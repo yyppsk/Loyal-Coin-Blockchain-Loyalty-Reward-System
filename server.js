@@ -13,6 +13,9 @@ const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require("./webpack.config"); // Update the path to your webpack.config.js
 const bodyParser = require("body-parser"); // Import body-parser
+const tokenController = require("./tokenController.js");
+const tokenRequestsDataRouter = require("./tokenRequestsData.js");
+
 app.use(
   cors({
     origin: "http://localhost:3000", // Replace with your frontend's URL
@@ -39,7 +42,8 @@ app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+//Request Token Data
+app.use("/api", tokenRequestsDataRouter);
 // Serve the CSS file
 app.use(
   "/style.css",
@@ -119,6 +123,7 @@ app.post("/api/updateBlockchainAddress", async (req, res) => {
   }
 });
 
+//dashboard 2
 app.get("/dashboard2", (req, res) => {
   const filePath = path.join(__dirname, "public", "dashboard2.html");
   res.sendFile(filePath);
@@ -152,6 +157,9 @@ app.get("/dashboard", (req, res) => {
     res.redirect("/brandlogin");
   }
 });
+
+//Route for request Tokens
+app.post("/api/requestTokens", tokenController.requestTokens);
 
 // Route to serve the login.html page
 app.get("/registerbrand", (req, res) => {
