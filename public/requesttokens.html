@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        // Don't add the 'dark' class to the 'html' element
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body class="dark:bg-gray-800 bg-white">
+    <!-- Wrapper Starts Here -->
+
+    <nav class="border-gray-200 dark:bg-gray-900 bg-white">
+      <div
+        class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4"
+      >
+        <a href="./" class="flex items-center">
+          <img
+            src="./images/logo/logo-dark.svg"
+            class="mr-3 h-8"
+            alt="Flowbite Logo"
+          />
+          <span
+            class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+            >LCS</span
+          >
+        </a>
+        <div class="flex items-center md:order-2">
+          <button
+            type="button"
+            class="bg-gray-800 focus:ring-gray-300 dark:focus:ring-gray-600 mr-3 flex rounded-full text-sm focus:ring-4 md:mr-0"
+            id="user-menu-button"
+            aria-expanded="false"
+            data-dropdown-toggle="user-dropdown"
+            data-dropdown-placement="bottom"
+          >
+            <span class="sr-only">Open user menu</span>
+            <span id="current_user">
+              <img
+                class="h-8 w-8 rounded-full"
+                src="./images/user/user-02.png"
+                alt="user photo"
+              />
+            </span>
+          </button>
+          <!-- Dropdown menu -->
+          <div
+            class="divide-gray-100 dark:bg-gray-700 dark:divide-gray-600 z-50 my-4 hidden list-none divide-y rounded-lg bg-white text-base shadow"
+            id="user-dropdown"
+          >
+            <div class="px-4 py-3">
+              <span class="text-gray-900 block text-sm dark:text-white"
+                ><span id="brand_rep_name">Bonnie Green</span></span
+              >
+              <span
+                class="text-gray-500 dark:text-gray-400 block truncate text-sm"
+                >Logged in as</span
+              >
+            </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  href="./"
+                  class="text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 block px-4 py-2 text-sm dark:hover:text-white"
+                  >Dashboard</a
+                >
+              </li>
+
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 block px-4 py-2 text-sm dark:hover:text-white"
+                  >Sign out</a
+                >
+              </li>
+            </ul>
+          </div>
+          <button
+            data-collapse-toggle="navbar-user"
+            type="button"
+            class="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm focus:outline-none focus:ring-2 md:hidden"
+            aria-controls="navbar-user"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="h-5 w-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+          id="navbar-user"
+        >
+          <ul
+            class="border-gray-100 bg-gray-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mt-4 flex flex-col rounded-lg border p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
+          >
+            <li>
+              <a
+                href="./"
+                class="bg-blue-700 md:text-blue-700 md:dark:text-blue-500 block rounded py-2 pl-3 pr-4 text-white md:bg-transparent md:p-0"
+                aria-current="page"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/about"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="/requesttokens"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >Pricing</a
+              >
+            </li>
+            <li>
+              <a
+                href="/support"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >Contact</a
+              >
+            </li>
+            <li></li>
+          </ul>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-4"
+          >
+            <svg
+              id="theme-toggle-dark-icon"
+              class="hidden h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              ></path>
+            </svg>
+            <svg
+              id="theme-toggle-light-icon"
+              class="hidden h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="wrapper">
+      <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+        .header {
+          width: 80%;
+        }
+        .preset-options {
+          display: flex;
+          width: 80%;
+          justify-content: space-evenly;
+        }
+        .wrapper {
+          margin-top: 4rem;
+          display: grid;
+          gap: 6rem;
+          width: 100%;
+          align-items: baseline;
+          justify-items: center;
+          justify-content: center;
+        }
+      </style>
+      <div class="header">
+        <h1
+          class="text-gray-900 mb-4 text-3xl font-extrabold dark:text-white md:text-5xl lg:text-6xl"
+        >
+          <span
+            class="to-emerald-600 from-sky-400 bg-gradient-to-r bg-clip-text text-transparent"
+            >Reward Tokens</span
+          >
+          Happier Customers.
+        </h1>
+        <p
+          class="text-gray-500 dark:text-gray-400 text-lg font-normal lg:text-xl"
+        >
+          Rewaring your customers to win their loyalty is one of most crucial
+          bussiness logic. LoyalCoin ensures the idea of Rewards to be easy &
+          seameless for the user experience.
+        </p>
+      </div>
+      <!-- Price Cards Start-->
+      <div class="preset-options">
+        <div
+          class="border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full max-w-sm rounded-lg border bg-white p-4 shadow sm:p-8"
+        >
+          <h5 class="text-gray-500 dark:text-gray-400 mb-4 text-xl font-medium">
+            Startup Plan
+          </h5>
+          <div class="text-gray-900 flex items-baseline dark:text-white">
+            <span class="text-3xl font-semibold">₹</span>
+            <span class="text-5xl font-extrabold tracking-tight">5999</span>
+            <span
+              class="text-gray-500 dark:text-gray-400 ml-1 text-xl font-normal"
+              >/month</span
+            >
+          </div>
+          <ul role="list" class="my-7 space-y-5">
+            <li class="flex items-center space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >5999 + (extra 350) Loyal Coins</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >2 team members</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Integration help</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >API Access</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >Data Base Access</span
+              >
+            </li>
+
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >Complete documentation</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >24x7 phone & email support</span
+              >
+            </li>
+          </ul>
+          <button
+            type="button"
+            class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-200 dark:focus:ring-blue-900 inline-flex w-full justify-center rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+          >
+            Choose plan
+          </button>
+        </div>
+
+        <div
+          class="border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full max-w-sm rounded-lg border bg-white p-4 shadow sm:p-8"
+        >
+          <h5 class="text-gray-500 dark:text-gray-400 mb-4 text-xl font-medium">
+            Medium Size bussiness Plan
+          </h5>
+          <div class="text-gray-900 flex items-baseline dark:text-white">
+            <span class="text-3xl font-semibold">₹</span>
+            <span class="text-5xl font-extrabold tracking-tight">11999</span>
+            <span
+              class="text-gray-500 dark:text-gray-400 ml-1 text-xl font-normal"
+              >/month</span
+            >
+          </div>
+          <ul role="list" class="my-7 space-y-5">
+            <li class="flex items-center space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >11999 + (extra 650) Loyal Coins</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >5 team members</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Integration help</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >API Access</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >Data Base Access</span
+              >
+            </li>
+
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >Complete documentation</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3 line-through">
+              <svg
+                class="text-gray-400 dark:text-gray-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span class="text-gray-500 text-base font-normal leading-tight"
+                >24x7 phone & email support</span
+              >
+            </li>
+          </ul>
+          <button
+            type="button"
+            class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-200 dark:focus:ring-blue-900 inline-flex w-full justify-center rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+          >
+            Choose plan
+          </button>
+        </div>
+
+        <div
+          class="border-gray-200 dark:bg-gray-800 dark:border-gray-700 w-full max-w-sm rounded-lg border bg-white p-4 shadow sm:p-8"
+        >
+          <h5 class="text-gray-500 dark:text-gray-400 mb-4 text-xl font-medium">
+            Enterprise bussiness Plan
+          </h5>
+          <div class="text-gray-900 flex items-baseline dark:text-white">
+            <span class="text-5xl font-extrabold tracking-tight"
+              >Let's Talk</span
+            >
+          </div>
+          <ul role="list" class="my-7 space-y-5">
+            <li class="flex items-center space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Above 20K LoyalCoin Demands</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Upto 20 team members</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Integration help</span
+              >
+            </li>
+
+            <li class="decoration-gray-500 flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >API Access</span
+              >
+            </li>
+            <li class="flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Data Base Access</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >Complete documentation</span
+              >
+            </li>
+            <li class="decoration-gray-500 flex space-x-3">
+              <svg
+                class="text-blue-600 dark:text-blue-500 h-4 w-4 flex-shrink-0"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+                />
+              </svg>
+              <span
+                class="text-gray-500 dark:text-gray-400 text-base font-normal leading-tight"
+                >24x7 phone & email support</span
+              >
+            </li>
+          </ul>
+          <a href="/enterprisesupport">
+            <button
+              type="button"
+              class="bg-blue-600 hover:bg-blue-700 focus:ring-blue-200 dark:focus:ring-blue-900 inline-flex w-full justify-center rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
+            >
+              Contact Us
+            </button>
+          </a>
+        </div>
+      </div>
+      <!-- Price Cards End -->
+      <form id="requestTokensForm">
+        <label for="amount">Amount of Tokens:</label>
+        <input type="number" id="amount" name="amount" required />
+        <button type="submit">Request Tokens</button>
+      </form>
+
+      <!--Attraction Start-->
+
+      <!--Attraction End-->
+    </div>
+    <!-- Wrapper Ends Here -->
+    <!-- Footer Code starts here-->
+    <footer class="dark:bg-gray-900 m-4 rounded-lg bg-white shadow">
+      <div class="mx-auto w-full max-w-screen-xl p-4 md:py-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+          <a href="./" class="mb-4 flex items-center sm:mb-0">
+            <img
+              src="./images/logo/logo-dark.svg"
+              class="mr-3 h-8"
+              alt="Flowbite Logo"
+            />
+            <span
+              class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+              >LCR</span
+            >
+          </a>
+          <ul
+            class="text-gray-500 dark:text-gray-400 mb-6 flex flex-wrap items-center text-sm font-medium sm:mb-0"
+          >
+            <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
+            </li>
+            <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <hr
+          class="border-gray-200 dark:border-gray-700 my-6 sm:mx-auto lg:my-8"
+        />
+        <span
+          class="text-gray-500 dark:text-gray-400 block text-sm sm:text-center"
+          >© 2023 <a href="./" class="hover:underline">LoyalCoin Platform</a>.
+          All Rights Reserved.</span
+        >
+      </div>
+    </footer>
+
+    <!-- Footer Ends Here -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+
+    <script>
+      //Token request function
+      // Global variables
+      let brandname = "";
+      let brandid = "";
+      let brand_representative = "";
+      let brand_rep_email = "";
+      let brand_rep_id = "";
+      let blockchain_address = "";
+      // Token request function
+      function setupTokenRequestForm() {
+        const requestTokensForm = document.getElementById("requestTokensForm");
+
+        requestTokensForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const amount = parseInt(document.getElementById("amount").value);
+
+          try {
+            const response = await fetch("/api/requestTokens", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                amount,
+                brandId,
+                brandname,
+                brand_representative,
+                brand_rep_email, // Add brand_rep_email
+                brand_rep_id, // Add brand_rep_id
+                blockchain_address,
+                pending: false, // Set the request as not pending
+              }),
+            });
+
+            if (response.ok) {
+              const result = await response.json();
+              if (result.success) {
+                alert("Token request sent successfully. Waiting for approval.");
+              } else {
+                alert("Failed to send token request. Please try again.");
+              }
+            } else {
+              alert("Failed to send token request. Please try again.");
+            }
+          } catch (error) {
+            console.error("Error sending token request:", error);
+            alert("An error occurred while sending token request.");
+          }
+        });
+      }
+      //Login Check
+      async function checkLoggedIn() {
+        try {
+          const response = await fetch("/api/check-auth");
+          const data = await response.json();
+          if (!data.isAuthenticated) {
+            alert("Please log in before requesting tokens.");
+            window.location.href = "./brandlogin"; // Redirect to login page
+          } else {
+            // User is logged in, proceed with token request form setup
+            (async () => {
+              try {
+                // Fetch user data from the server
+                const response = await fetch(
+                  "http://localhost:3000/api/auth/userdata",
+                  {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    credentials: "include", // Include cookies for session management
+                  }
+                );
+
+                if (response.ok) {
+                  const { user, brandData } = await response.json();
+
+                  //For Request modification
+                  brandname = brandData.name;
+                  brandid = brandData.brand_id;
+                  brand_representative = user.name;
+                  blockchain_address = brandData.blockchain_address;
+                  brand_rep_email = user.email;
+                  brand_rep_id = user.representative_id;
+                  // console.log(
+                  //   ` User and brand data collected: `,
+                  //   brandname,
+                  //   ` \n `,
+                  //   brandid,
+                  //   ` \n `,
+                  //   brand_representative,
+                  //   ` \n `,
+                  //   blockchain_address,
+                  //   ` \n `,
+                  //   brand_rep_email,
+                  //   ` \n `,
+                  //   brand_rep_id
+                  // );
+                  //For Html modofication
+                  const brand_rep_name =
+                    document.getElementById("brand_rep_name");
+                  const avatar = document.getElementById("current_user");
+                  //console.log(brand_rep_name);
+                  const avatarHtml = `<div class="relative">
+                    <img src=".${user.brand_rep_profile_image}" class="h-10 w-10 rounded-full" alt="User"/>
+                    <span class="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                </div>
+                `;
+                  avatar.innerHTML = avatarHtml;
+
+                  const userDataHTML = `${user.name}`;
+                  brand_rep_name.innerHTML = userDataHTML;
+                } else {
+                  alert("Failed to fetch user data");
+                }
+              } catch (error) {
+                console.error("Error fetching user data:", error);
+                alert("An error occurred while fetching user data");
+              }
+            })();
+            //setupTokenRequestForm(); //Main Token Form Request
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+        }
+      }
+
+      // Call the checkLoggedIn function when the page loads
+      window.onload = checkLoggedIn;
+    </script>
+    <script>
+      //Dark Theme
+      var themeToggleDarkIcon = document.getElementById(
+        "theme-toggle-dark-icon"
+      );
+      var themeToggleLightIcon = document.getElementById(
+        "theme-toggle-light-icon"
+      );
+
+      // Change the icons inside the button based on previous settings
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        themeToggleLightIcon.classList.remove("hidden");
+      } else {
+        themeToggleDarkIcon.classList.remove("hidden");
+      }
+
+      var themeToggleBtn = document.getElementById("theme-toggle");
+
+      themeToggleBtn.addEventListener("click", function () {
+        // toggle icons inside button
+        themeToggleDarkIcon.classList.toggle("hidden");
+        themeToggleLightIcon.classList.toggle("hidden");
+
+        // if set via local storage previously
+        if (localStorage.getItem("color-theme")) {
+          if (localStorage.getItem("color-theme") === "light") {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          }
+
+          // if NOT set via local storage previously
+        } else {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("color-theme", "light");
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("color-theme", "dark");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

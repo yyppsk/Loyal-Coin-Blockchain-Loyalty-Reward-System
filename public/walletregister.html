@@ -912,151 +912,6 @@
         </div>
       </div>
       <!-- Test Modal Ends Here -->
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
-      <script>
-        //Function for avatar & Name updation
-        // target element that will be dismissed
-        window.addEventListener("load", function () {
-          const toggleButton = document.querySelector(
-            "[data-modal-toggle='defaultModal']"
-          );
-
-          toggleButton.style.display = "none";
-        });
-
-        function toastNotify() {
-          (async () => {
-            try {
-              // Fetch user data from the server
-              const response = await fetch(
-                "http://localhost:3000/api/auth/userdata",
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  credentials: "include", // Include cookies for session management
-                }
-              );
-
-              if (response.ok) {
-                const { user, brandData } = await response.json();
-                const brand_rep_name = document.getElementById("current_user");
-                const avatar = document.getElementById("user-avatar");
-                console.log(brand_rep_name);
-                const avatarHtml = `<img src=".${user.brand_rep_profile_image}"  class="h-12 w-12 rounded-full" alt="User"/>`;
-                avatar.innerHTML = avatarHtml;
-
-                const userDataHTML = `
-        ${user.name}`;
-                brand_rep_name.innerHTML = userDataHTML;
-              } else {
-                alert("Failed to fetch user data");
-              }
-            } catch (error) {
-              console.error("Error fetching user data:", error);
-              alert("An error occurred while fetching user data");
-            }
-          })();
-
-          const $targetEl = document.getElementById("toast-notification");
-
-          // options object
-          const options = {
-            transition: "transition-opacity",
-            duration: 1000,
-            timing: "ease-out",
-
-            // callback functions
-            onHide: (context, targetEl) => {
-              console.log("Element has been dismissed");
-            },
-          };
-
-          // show toast notification
-          $targetEl.classList.remove("hidden");
-
-          // dismiss toast notification after a delay
-        }
-
-        //Check if Usser is logged in or not
-        async function checkLoggedInAndConnectMetaMask() {
-          try {
-            const response = await fetch("/api/check-auth");
-            const data = await response.json();
-            if (data.isAuthenticated) {
-              // User is logged in, proceed with MetaMask connection logic
-              // Check if MetaMask is installed
-
-              if (typeof window.ethereum !== "undefined") {
-              } else {
-                // MetaMask is not installed, handle accordingly
-                alert(
-                  "MetaMask is not installed in your browser. Please install MetaMask to continue."
-                );
-                window.location.href = "https://metamask.io/download/";
-              }
-            } else {
-              alert("Please log in before connecting MetaMask.");
-              window.location.href = "/brandlogin"; // Redirect to login page
-            }
-          } catch (error) {
-            console.error("Error checking authentication:", error);
-          }
-        }
-
-        // Check if user is logged in and connect MetaMask
-        checkLoggedInAndConnectMetaMask(); //login check
-        const connectMetaMaskButton =
-          document.getElementById("connectMetaMask");
-        async function connectMetaMask() {
-          try {
-            // Request access to accounts from MetaMask
-            await ethereum.request({ method: "eth_requestAccounts" });
-
-            // Get the selected address
-            const accounts = await ethereum.request({
-              method: "eth_accounts",
-            });
-            const blockchainAddress = accounts[0]; // Get the first account
-
-            // Send the blockchain address to your server
-            const response = await fetch("/api/updateBlockchainAddress", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ blockchainAddress }),
-            });
-
-            if (response.ok) {
-              const result = await response.json();
-              if (result.success) {
-                toastNotify();
-                const toggleButton = document.querySelector(
-                  "[data-modal-toggle='defaultModal']"
-                );
-                toggleButton.click();
-                alert("Blockchain address updated successfully.");
-              } else {
-                alert("Blockchain address is already present.");
-              }
-            } else {
-              alert("Failed to update blockchain address.");
-            }
-          } catch (error) {
-            console.error("Error connecting MetaMask:", error);
-            alert("An error occurred while connecting MetaMask.");
-          }
-        }
-
-        // Attach click event listener to connectMetaMaskButton
-        connectMetaMaskButton.addEventListener("click", async () => {
-          await connectMetaMask();
-        });
-        // }
-      </script>
     </div>
     <!-- Wrapper Ends Here -->
 
@@ -1156,5 +1011,149 @@
     </footer>
 
     <!-- Footer Ends Here -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+    <script>
+      //Function for avatar & Name updation
+      // target element that will be dismissed
+      window.addEventListener("load", function () {
+        const toggleButton = document.querySelector(
+          "[data-modal-toggle='defaultModal']"
+        );
+
+        toggleButton.style.display = "none";
+      });
+
+      function toastNotify() {
+        (async () => {
+          try {
+            // Fetch user data from the server
+            const response = await fetch(
+              "http://localhost:3000/api/auth/userdata",
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                credentials: "include", // Include cookies for session management
+              }
+            );
+
+            if (response.ok) {
+              const { user, brandData } = await response.json();
+              const brand_rep_name = document.getElementById("current_user");
+              const avatar = document.getElementById("user-avatar");
+              console.log(brand_rep_name);
+              const avatarHtml = `<img src=".${user.brand_rep_profile_image}"  class="h-12 w-12 rounded-full" alt="User"/>`;
+              avatar.innerHTML = avatarHtml;
+
+              const userDataHTML = `
+      ${user.name}`;
+              brand_rep_name.innerHTML = userDataHTML;
+            } else {
+              alert("Failed to fetch user data");
+            }
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            alert("An error occurred while fetching user data");
+          }
+        })();
+
+        const $targetEl = document.getElementById("toast-notification");
+
+        // options object
+        const options = {
+          transition: "transition-opacity",
+          duration: 1000,
+          timing: "ease-out",
+
+          // callback functions
+          onHide: (context, targetEl) => {
+            console.log("Element has been dismissed");
+          },
+        };
+
+        // show toast notification
+        $targetEl.classList.remove("hidden");
+
+        // dismiss toast notification after a delay
+      }
+
+      //Check if Usser is logged in or not
+      async function checkLoggedInAndConnectMetaMask() {
+        try {
+          const response = await fetch("/api/check-auth");
+          const data = await response.json();
+          if (data.isAuthenticated) {
+            // User is logged in, proceed with MetaMask connection logic
+            // Check if MetaMask is installed
+
+            if (typeof window.ethereum !== "undefined") {
+            } else {
+              // MetaMask is not installed, handle accordingly
+              alert(
+                "MetaMask is not installed in your browser. Please install MetaMask to continue."
+              );
+              window.location.href = "https://metamask.io/download/";
+            }
+          } else {
+            alert("Please log in before connecting MetaMask.");
+            window.location.href = "/brandlogin"; // Redirect to login page
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+        }
+      }
+
+      // Check if user is logged in and connect MetaMask
+      checkLoggedInAndConnectMetaMask(); //login check
+      const connectMetaMaskButton = document.getElementById("connectMetaMask");
+      async function connectMetaMask() {
+        try {
+          // Request access to accounts from MetaMask
+          await ethereum.request({ method: "eth_requestAccounts" });
+
+          // Get the selected address
+          const accounts = await ethereum.request({
+            method: "eth_accounts",
+          });
+          const blockchainAddress = accounts[0]; // Get the first account
+
+          // Send the blockchain address to your server
+          const response = await fetch("/api/updateBlockchainAddress", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ blockchainAddress }),
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            if (result.success) {
+              toastNotify();
+              const toggleButton = document.querySelector(
+                "[data-modal-toggle='defaultModal']"
+              );
+              toggleButton.click();
+              alert("Blockchain address updated successfully.");
+            } else {
+              alert("Blockchain address is already present.");
+            }
+          } else {
+            alert("Failed to update blockchain address.");
+          }
+        } catch (error) {
+          console.error("Error connecting MetaMask:", error);
+          alert("An error occurred while connecting MetaMask.");
+        }
+      }
+
+      // Attach click event listener to connectMetaMaskButton
+      connectMetaMaskButton.addEventListener("click", async () => {
+        await connectMetaMask();
+      });
+      // }
+    </script>
   </body>
 </html>

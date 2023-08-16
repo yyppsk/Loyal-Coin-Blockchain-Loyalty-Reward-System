@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
 };
 
 //
-// Controller for getting user
+// Controller for getting user's data
 //
 
 const getUserData = async (req, res) => {
@@ -65,7 +65,7 @@ const getUserData = async (req, res) => {
 
     // Retrieve user data from the database
     const userQuery =
-      "SELECT name, brand_id ,brand_rep_profile_image, email FROM brandrepresentatives WHERE representative_id = $1";
+      "SELECT name, representative_id, brand_id ,brand_rep_profile_image, email FROM brandrepresentatives WHERE representative_id = $1";
     const userResult = await pool.query(userQuery, [userId]);
 
     if (userResult.rows.length === 0) {

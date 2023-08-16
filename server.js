@@ -119,7 +119,6 @@ app.post("/api/updateBlockchainAddress", async (req, res) => {
   }
 });
 
-//const Brand = require("./models/Brands"); // Import the Sequelize mode
 app.get("/dashboard2", (req, res) => {
   const filePath = path.join(__dirname, "public", "dashboard2.html");
   res.sendFile(filePath);
@@ -132,6 +131,16 @@ app.get("/src", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "index.html"));
 });
 
+app.get("/requesttokens", (req, res) => {
+  const filePath = path.join(__dirname, "public", "requesttokens.html");
+  res.sendFile(filePath);
+});
+// Route to serve the login.html page
+app.get("/brandlogin", (req, res) => {
+  const filePath = path.join(__dirname, "public", "login.html");
+  res.sendFile(filePath);
+});
+
 app.get("/dashboard", (req, res) => {
   if (req.session.userId) {
     // console.log(req.session.userId); //Testing if the session is maintained
@@ -142,12 +151,6 @@ app.get("/dashboard", (req, res) => {
     // User is not logged in, redirect to the login page
     res.redirect("/brandlogin");
   }
-});
-
-// Route to serve the login.html page
-app.get("/brandlogin", (req, res) => {
-  const filePath = path.join(__dirname, "public", "login.html");
-  res.sendFile(filePath);
 });
 
 // Route to serve the login.html page
@@ -171,6 +174,12 @@ app.get("/getBalance", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+// Route to handle 404 errors
+app.use((req, res, next) => {
+  const filePath = path.join(__dirname, "public", "404.html");
+  res.status(404).sendFile(filePath);
+});
+
 // Start the server
 const PORT = process.env.PORT || 3001; // Use a different port than your webpack dev server
 app.listen(PORT, () => {
