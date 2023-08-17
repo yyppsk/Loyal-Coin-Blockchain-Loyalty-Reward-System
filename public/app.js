@@ -862,6 +862,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
   const userAddress = accounts[0];
   const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
+  const globecontractAddress = "0xbA1DC9d7A26F2a81625eBD5f34Bb3EBfE6B30D87";
+  // Function to transfer tokens
+  async function transferTokens(amount, toAddress) {
+    try {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const userAddress = accounts[0];
+      const txParams = {
+        to: globecontractAddress,
+        from: userAddress,
+        data: contractInstance.methods.transfer(toAddress, amount).encodeABI(),
+      };
+
+      const txHash = await ethereum.request({
+        method: "eth_sendTransaction",
+        params: [txParams],
+      });
+      console.log("Transfer transaction hash:", txHash);
+
+      updateBalance(userAddress); // Update the balance after transfer
+    } catch (error) {
+      console.error("Error transferring tokens:", error);
+    }
+  }
   async function updateBalance(userAddress) {
     try {
       const balance = await contractInstance.methods
@@ -976,6 +1001,32 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     });
 
+  // An event listener to the document to handle the click event on the transfer buttons
+  document.addEventListener("click", async (event) => {
+    // Checking if the clicked element is a transfer button
+    if (event.target.matches('[id^="fullFillRequest-"]')) {
+      // Get the request_id from the button's id
+      const requestId = event.target.id.split("-")[1];
+      console.log(requestId);
+      // Extract the request details from the listItem
+      const amount = parseFloat(
+        document.querySelector(`#amount-${requestId}`).textContent
+      );
+      console.log(amount, typeof amount);
+      const toAddress = document
+        .querySelector(`#blockchain-address-${requestId}`)
+        .textContent.trim()
+        .replace("Address: ", "");
+
+      console.log(typeof toAddress);
+      // Call the transfer function with the extracted details and the contractAddress
+      await transferTokens(amount, toAddress);
+
+      // Update the list item status (optional)
+      document.querySelector("#status").textContent = "Processed"; // Update the status to "Processed" after transfer
+    }
+  });
+
   if (!isReturningUser) {
     // Runs only if they are brand new, or have hit the disconnect button
     await window.ethereum.request({
@@ -988,6 +1039,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
+
 /* 
 contractInstance.methods.balanceOf("
 0xFb711699531E44B37e3dE5259Ca1fe95d3bE9f6b").call()
