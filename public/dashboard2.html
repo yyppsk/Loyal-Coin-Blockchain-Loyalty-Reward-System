@@ -6,6 +6,12 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css"
         rel="stylesheet"
       />
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.1.0/web3.min.js"
+        integrity="sha512-COI914Q0wT4y7lcjXOxq2fdsz6aOj8BcC2ojR1mwyLYpujAOjhaRdEgVVX2TFxirzLDpQD5CmEHwSu48VDJejg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      ></script>
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script
         src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.0/luxon.min.js"
@@ -1473,12 +1479,12 @@
           <div
             class="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
           >
+            <!-- Chart Loader Start-->
             <div
-              class="border-gray-300 dark:border-gray-600 h-32 rounded-lg border-2 border-dashed md:h-full"
+              class="border-gray-300 dark:border-gray-600 row-span-2 h-64 rounded-lg md:h-70"
             >
-              <!-- Chart Loader Start-->
               <div
-                class="dark:bg-gray-800 w-full max-w-sm rounded-lg bg-white p-4 shadow md:p-2"
+                class="dark:bg-gray-800 md:h-content-height shadows w-full max-w-sm rounded-lg bg-white p-4 md:p-2"
               >
                 <div class="flex justify-between">
                   <div>
@@ -1615,11 +1621,15 @@
                 </div>
               </div>
             </div>
+            <!-- Chart Loader End-->
+
             <div
               class="border-gray-300 dark:border-gray-600 h-32 rounded-lg border-2 border-dashed md:h-64"
             >
               <!-- Animation Loader Start-->
+
               <div
+                id="totalLCS"
                 class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 flex h-full w-full items-center justify-center rounded-lg border"
               >
                 <div
@@ -1660,11 +1670,33 @@
               </div>
               <!-- Animation Loader End-->
             </div>
+            <div
+              id="outer"
+              class="border-gray-300 dark:border-gray-600 h-32 rounded-lg border-2 border-dashed md:h-64"
+            >
+              <!-- Animation Loader Start-->
+              <div
+                class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 flex h-full w-full items-center justify-center rounded-lg border"
+              >
+                <div
+                  class="text-blue-800 bg-blue-200 dark:bg-blue-900 dark:text-blue-200 animate-pulse rounded-full px-3 py-1 text-center text-lg font-medium leading-none"
+                >
+                  loading...
+                </div>
+              </div>
+              <!-- Animation Loader End-->
+            </div>
+            <style>
+              #outer {
+                grid-column: 2 / -1;
+              }
+            </style>
           </div>
           <div
             class="border-gray-300 dark:border-gray-600 mb-4 h-auto rounded-lg border-2 border-dashed"
           >
             <!-- Notifications-Inside Start -->
+
             <!-- PANEL FOR TOKEN REQEUSTS!! Very important -->
             <div
               class="border-gray-100 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 mb-4 rounded-lg border p-5"
@@ -1745,10 +1777,76 @@
           <div class="mb-4 grid grid-cols-2 gap-4">
             <div
               class="border-gray-300 dark:border-gray-600 h-48 rounded-lg border-2 border-dashed md:h-72"
-            ></div>
+            >
+              <div
+                class="mt-2 rounded-lg bg-white p-6 shadow-lg sm:mt-0 sm:mb-0 lg:h-full"
+              >
+                <div class="mb-6">
+                  <label
+                    for="redeemAmount"
+                    class="text-gray-900 mb-2 block text-sm font-medium dark:text-white"
+                    >Enter amount to Redeem</label
+                  >
+                  <input
+                    type="number"
+                    name="redeemAmount"
+                    id="redeemAmount"
+                    class="bg-gray-50 border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border p-2.5 text-sm dark:text-white"
+                    placeholder="Redeem LCR"
+                    required
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  id="redeemButton"
+                  class="bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 sm:w-auto"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+            <!--Section 2 OF Blockchain Management Tabs-->
             <div
               class="border-gray-300 dark:border-gray-600 h-48 rounded-lg border-2 border-dashed md:h-72"
-            ></div>
+            >
+              <div
+                class="mt-2 rounded-lg bg-white p-6 shadow-lg sm:mt-0 sm:mb-0"
+              >
+                <h2 class="mb-3 text-center sm:text-left">Transfer Tokens</h2>
+                <div class="mb-2">
+                  <label
+                    for="toAddress"
+                    class="text-gray-700 text-center sm:text-left"
+                    >To Address</label
+                  >
+                  <input
+                    type="text"
+                    id="toAddress"
+                    class="focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 mt-1 block w-full rounded-md shadow-sm sm:text-sm"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label
+                    for="transferAmount"
+                    class="text-gray-700 text-center sm:text-left"
+                    >Amount</label
+                  >
+                  <input
+                    type="number"
+                    id="transferAmount"
+                    class="focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 mt-1 block w-full rounded-md shadow-sm sm:text-sm"
+                  />
+                </div>
+                <button
+                  id="transferButton"
+                  class="bg-green-500 hover:bg-green-600 rounded-md px-4 py-2 text-white"
+                >
+                  Transfer
+                </button>
+              </div>
+            </div>
+
             <div
               class="border-gray-300 dark:border-gray-600 h-48 rounded-lg border-2 border-dashed md:h-72"
             ></div>
@@ -1803,9 +1901,6 @@
           <h2 class="mb-4 font-semibold">
             You're logged in as : <span id="loggedin" class="font-bold"></span>
           </h2>
-          <p>
-            Your Token Balance: <span id="balance" class="font-bold"></span> LCS
-          </p>
         </div>
 
         <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -1818,69 +1913,6 @@
               Earn
             </button>
           </div>
-
-          <div class="rounded-lg bg-white p-6 shadow-lg">
-            <!-- Add an input field for redeeming tokens -->
-            <div class="mt-4">
-              <label
-                for="redeemAmount"
-                class="text-gray-700 block text-sm font-medium"
-                >Redeem Amount</label
-              >
-              <div class="mt-1">
-                <input
-                  type="number"
-                  id="redeemAmount"
-                  name="redeemAmount"
-                  class="focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 block w-full rounded-md shadow-sm sm:text-sm"
-                  placeholder="Enter amount to redeem"
-                />
-              </div>
-            </div>
-
-            <!-- Add a redeem button -->
-            <button
-              id="redeemButton"
-              type="button"
-              class="bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 mt-4 inline-flex items-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
-            >
-              Redeem Tokens
-            </button>
-          </div>
-        </div>
-
-        <div class="mt-8 rounded-lg bg-white p-6 shadow-lg">
-          <h2 class="mb-4 text-xl font-semibold">Transfer Tokens</h2>
-          <div class="mb-4">
-            <label
-              for="toAddress"
-              class="text-gray-700 block text-sm font-medium"
-              >To Address</label
-            >
-            <input
-              type="text"
-              id="toAddress"
-              class="focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 mt-1 block w-full rounded-md shadow-sm sm:text-sm"
-            />
-          </div>
-          <div class="mb-4">
-            <label
-              for="transferAmount"
-              class="text-gray-700 block text-sm font-medium"
-              >Amount</label
-            >
-            <input
-              type="number"
-              id="transferAmount"
-              class="focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 mt-1 block w-full rounded-md shadow-sm sm:text-sm"
-            />
-          </div>
-          <button
-            id="transferButton"
-            class="bg-green-500 hover:bg-green-600 rounded-md px-4 py-2 text-white"
-          >
-            Transfer
-          </button>
         </div>
       </div>
 
@@ -1947,6 +1979,7 @@
           },
         };
       </script>
+
       <script src="./js/darktheme.js"></script>
     </body>
   </html>

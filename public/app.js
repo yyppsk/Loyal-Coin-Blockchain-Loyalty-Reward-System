@@ -870,7 +870,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Convert the balance from wei to FKC format
       const balanceInFKC = web3.utils.fromWei(balance, "ether");
-      document.getElementById("balance").textContent = balanceInFKC;
+      const balancehtml = `
+      <div class="flex flex-col items-center space-x-4">
+      <img class="w-16 h-16 rounded-full" src="./images/logo/loyalCoinToken_small.png" alt="">
+      <div class="text-center sm:text-center break-all font-medium dark:text-white">
+          <div >TotalLCS</div>
+          <div class="text-gray-500 dark:text-gray-400">${balanceInFKC}</div>
+      </div>
+  </div>
+  
+      `;
+      const loaderHtml = document.getElementById("totalLCS");
+      loaderHtml.innerHTML = balancehtml;
+      //document.getElementById("balance").textContent = balanceInFKC;
       //Displaying who's logged in via metamask
       document.getElementById("loggedin").textContent = userAddress;
     } catch (error) {
