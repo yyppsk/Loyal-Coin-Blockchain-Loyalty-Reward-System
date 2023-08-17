@@ -15,6 +15,7 @@ const webpackConfig = require("./webpack.config"); // Update the path to your we
 const bodyParser = require("body-parser"); // Import body-parser
 const tokenController = require("./tokenController.js");
 const tokenRequestsDataRouter = require("./tokenRequestsData.js");
+const updateTablesRouter = require("./updateTables.js");
 
 app.use(
   cors({
@@ -49,6 +50,8 @@ app.use(
   "/style.css",
   express.static(path.join(__dirname, "public", "./css/style.css"))
 );
+// Use the updateTables router for the /updateTables route
+app.use("/updateTables", updateTablesRouter);
 
 app.get("/api/check-auth", (req, res) => {
   // Check if the user is authenticated

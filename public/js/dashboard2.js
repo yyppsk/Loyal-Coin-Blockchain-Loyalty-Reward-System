@@ -110,7 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
                       </div>
                       <div class="text-sm font-normal">
                         From ${request.brand_name} by Request id : ${request.request_id}
-                        <span id="status" class="bg-${request.pending ? "green" : "purple"}-100 text-${request.pending ? "green" : "purple"}-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-${request.pending ? "green" : "purple"}-900 dark:text-${request.pending ? "green" : "purple"}-300">${request.pending ? "Processed" : "Not Yet Processed"}</span>
+                        <span id="status" class="bg-${request.pending ? "green" : "purple"}-100 text-${request.pending ? "green" : "purple"}-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-${request.pending ? "green" : "purple"}-900 dark:text-${request.pending ? "green" : "purple"}-300">${request.pending ? "Processed" : "Not Yet Processed"}
+                        </span>
+                                            
                       </div>
                       <span class="text-gray-500 dark:text-gray-400 inline-flex items-center text-xs font-normal">
                       <svg class="mr-1 h-2.5 w-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -127,18 +129,23 @@ document.addEventListener("DOMContentLoaded", () => {
                       </span>
                     </div>
                   </a>
+
+
+                  <!-- Modal Handling for Transaction -->
+                  
+                  <!-- This Code Handles the transfer of Tokens To Brands -->
+
                     <button
-                    type="button"
-                    id="fullFillRequest-${request.request_id}"
-                    class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="w-6 h-5 mr-2 -ml-1"
-                      viewBox="0 0 2405 2501"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
+                      type="button"
+                      id="fullFillRequest-${request.request_id}"
+                      class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2" >
+                      <svg
+                        aria-hidden="true"
+                        class="w-6 h-5 mr-2 -ml-1"
+                        viewBox="0 0 2405 2501"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                       <g clip-path="url(#clip0_1512_1323)">
                         <path
                           d="M2278.79 1730.86L2133.62 2221.69L1848.64 2143.76L2278.79 1730.86Z"

@@ -1,11 +1,12 @@
 const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+
 // Convert token balance to points
 function convertToPoints(tokenBalance) {
   // Conversion ratio: 1 FKC = 100 points
   const conversionRatio = 100;
   return tokenBalance / conversionRatio;
 }
-
+let txHashReturning;
 // Example: Get the latest block number
 web3.eth
   .getBlockNumber()
@@ -860,9 +861,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const accounts = await ethereum.request({
     method: "eth_requestAccounts",
   });
+
+  //Important Dependency for Transfer
   const userAddress = accounts[0];
   const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
   const globecontractAddress = "0xbA1DC9d7A26F2a81625eBD5f34Bb3EBfE6B30D87";
+
   // Function to transfer tokens
   async function transferTokens(amount, toAddress) {
     try {
@@ -883,8 +887,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("Transfer transaction hash:", txHash);
 
       updateBalance(userAddress); // Update the balance after transfer
+      return { success: true, txHash }; // Return success and txHash
     } catch (error) {
       console.error("Error transferring tokens:", error);
+      return { success: false, error };
     }
   }
   async function updateBalance(userAddress) {
@@ -902,14 +908,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div >TotalLCS</div>
           <div class="text-gray-500 dark:text-gray-400">${balanceInFKC}</div>
       </div>
-  </div>
+    </div>
   
       `;
       const loaderHtml = document.getElementById("totalLCS");
       loaderHtml.innerHTML = balancehtml;
       //document.getElementById("balance").textContent = balanceInFKC;
       //Displaying who's logged in via metamask
-      document.getElementById("loggedin").textContent = userAddress;
+      //document.getElementById("loggedin").textContent = userAddress;
     } catch (error) {
       console.error("Error updating balance:", error);
     }
@@ -917,30 +923,90 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   updateBalance(userAddress);
 
-  document.getElementById("earnButton").addEventListener("click", async () => {
+  //Transfer the Token to any Account X
+
+  //Update Tables for Each Successful transaction
+  async function updateTables(requestId, txHash) {
     try {
-      const amountToEarn = 100; // Specify the amount of tokens to earn
+      const response = await fetch("/updateTables", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          requestId,
+          txHash,
+        }),
+      });
+
+      return response.json();
+    } catch (error) {
+      console.error("Error updating tables:", error);
+      return { success: false };
+    }
+  }
+  // Function to transfer tokens
+  async function transferTokens(amount, toAddress) {
+    try {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
       const userAddress = accounts[0];
       const txParams = {
-        to: contractAddress,
+        to: globecontractAddress,
         from: userAddress,
-        data: contractInstance.methods.earnTokens(amountToEarn).encodeABI(),
+        data: contractInstance.methods.transfer(toAddress, amount).encodeABI(),
       };
 
       const txHash = await ethereum.request({
         method: "eth_sendTransaction",
         params: [txParams],
       });
-      console.log("Earn transaction hash:", txHash);
+      console.log("Transfer transaction hash:", txHash);
 
-      updateBalance();
+      // Set up a listener to monitor the transaction confirmation
+      const receipt = await waitForTransactionConfirmation(txHash);
+
+      // Check if the receipt is not null, indicating transaction confirmation
+      if (receipt !== null) {
+        console.log("Transaction confirmed in block:", receipt.blockNumber);
+
+        // Update the balance after transfer
+        updateBalance(userAddress);
+
+        // Return success and transaction hash
+        return { success: true, txHash };
+      } else {
+        console.log("Transaction is still pending");
+        return { success: false };
+      }
     } catch (error) {
-      console.error("Error earning tokens:", error);
+      console.error("Error transferring tokens:", error);
+      return { success: false };
     }
-  });
+  }
+
+  // Function to wait for transaction confirmation
+  async function waitForTransactionConfirmation(txHash) {
+    while (true) {
+      try {
+        const receipt = await ethereum.request({
+          method: "eth_getTransactionReceipt",
+          params: [txHash],
+        });
+
+        if (receipt !== null) {
+          return receipt;
+        }
+
+        // Wait for a few seconds before checking again
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+      } catch (error) {
+        console.error("Error getting transaction receipt:", error);
+        return null;
+      }
+    }
+  }
 
   document
     .getElementById("redeemButton")
@@ -1005,25 +1071,232 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.addEventListener("click", async (event) => {
     // Checking if the clicked element is a transfer button
     if (event.target.matches('[id^="fullFillRequest-"]')) {
+      function simulateButtonClick() {
+        const button = document.querySelector("#modalTriggerTransfer");
+        if (button) {
+          button.click();
+        }
+      }
+      simulateButtonClick();
       // Get the request_id from the button's id
       const requestId = event.target.id.split("-")[1];
-      console.log(requestId);
       // Extract the request details from the listItem
       const amount = parseFloat(
         document.querySelector(`#amount-${requestId}`).textContent
       );
-      console.log(amount, typeof amount);
       const toAddress = document
         .querySelector(`#blockchain-address-${requestId}`)
         .textContent.trim()
         .replace("Address: ", "");
 
-      console.log(typeof toAddress);
       // Call the transfer function with the extracted details and the contractAddress
-      await transferTokens(amount, toAddress);
 
-      // Update the list item status (optional)
-      document.querySelector("#status").textContent = "Processed"; // Update the status to "Processed" after transfer
+      const transferResult = await transferTokens(amount, toAddress);
+
+      //Initialized the transfer
+      const InitiatedTransferHtml =
+        document.querySelector("#initiatedTransfer");
+
+      const blockchainConfirmationHtml = document.querySelector(
+        "#blockchainConfirmation"
+      );
+      const transferredFinalHtml = document.querySelector("#transferredFinal");
+      const confirmedHtml = document.querySelector("#confirmed");
+
+      const destinationuserHtml = document.querySelector("#destination-user");
+      const transactionButtonHtml = document.querySelector(
+        "#transactionButton-html"
+      );
+
+      //Initialized the transfer confirmation marking Check
+      InitiatedTransferHtml.innerHTML = `<svg
+          class="w-4 h-4 mr-2 text-green-500 dark:text-green-400 flex-shrink-0"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+          />
+        </svg>`;
+
+      //Calling API from here if the process is succesful for transferring the tokens
+      //via admin panel
+      if (transferResult.success) {
+        const apiResponse = await updateTables(
+          requestId,
+          transferResult.txHash
+        );
+        if (apiResponse.success) {
+          // Update the list item status
+          //document.querySelector(`#status-${requestId}`).textContent =
+          //"Processed";
+          blockchainConfirmationHtml.innerHTML = `<svg
+          class="w-4 h-4 mr-2 text-green-500 dark:text-green-400 flex-shrink-0"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+          />
+        </svg>`;
+          transferredFinalHtml.innerHTML = `<svg
+          class="w-4 h-4 mr-2 text-green-500 dark:text-green-400 flex-shrink-0"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+          />
+        </svg>`;
+
+          confirmedHtml.innerHTML = `<span
+          class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-4 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300"
+        >
+            Confirmed
+        </span>`;
+
+          destinationuserHtml.innerHTML = `${toAddress}`;
+          transactionButtonHtml.innerHTML = `<a href="./dashboard2">
+          <button
+            id="transactionButton"
+            data-modal-hide="defaultModal"
+            type="button"
+            class="py-2.5 px-5 mr-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center"
+          >
+            <svg
+              role="status"
+              class="inline w-4 h-4 mr-3 text-gray-200 dark:text-green-600"
+              viewBox="0 0 20 20"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="green"
+            >
+              <path
+                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"
+              />
+            </svg>
+            Transaction Successful
+          </button>
+        </a>`;
+        } else {
+          //Transfer fails surely
+          transferredFinalHtml.innerHTML = `<svg
+            class="w-5 h-5 mr-2 text-gray-200 dark:text-gray-600 fill-red-600"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>`;
+          ////if blockchain fails final is failed
+          confirmedHtml.innerHTML = `<span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-4 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">  Failed</span>`;
+          destinationuserHtml.innerHTML = ` failed for ${toAddress}`;
+          console.error("Error updating tables");
+        }
+      } else {
+        //Cross & Failed
+        //if blockchain fails show error
+        blockchainConfirmationHtml.innerHTML = `<svg
+        class="w-5 h-5 mr-2 text-gray-200 dark:text-gray-600 fill-red-600"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>`;
+        //Transfer fails surely
+        transferredFinalHtml.innerHTML = `<svg
+        class="w-5 h-5 mr-2 text-gray-200 dark:text-gray-600 fill-red-600"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>`;
+        ////if blockchain fails final is failed
+        confirmedHtml.innerHTML = `<span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-4 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">  Failed</span>`;
+        destinationuserHtml.innerHTML = ` failed for ${toAddress}`;
+      }
+    } else {
+      //Initial fail
+      InitiatedTransferHtml.innerHTML = `<svg
+        class="w-5 h-5 mr-2 text-gray-200 dark:text-gray-600 fill-red-600"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>`;
+
+      blockchainConfirmationHtml.innerHTML = `<svg
+        class="w-5 h-5 mr-2 text-gray-200 dark:text-gray-600 fill-red-600"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>`;
+
+      //Transfer fails surely
+      transferredFinalHtml.innerHTML = `<svg
+        class="w-5 h-5 mr-2 text-gray-200 dark:text-gray-600 fill-red-600"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
+      </svg>`;
+      ////if blockchain fails final is failed
+      confirmedHtml.innerHTML = `<span class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-4 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">  Failed</span>`;
+      destinationuserHtml.innerHTML = ` failed for ${toAddress}`;
     }
   });
 
