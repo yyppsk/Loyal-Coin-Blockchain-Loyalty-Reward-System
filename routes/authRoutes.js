@@ -9,10 +9,10 @@ const path = require("path");
 const fs = require("fs");
 const router = express.Router();
 
-// Route for user login
+// Route for brand user login
 router.post("/login", loginUser);
 
-// Route for user data fetching
+// Route for brand user data fetching
 router.get("/userdata", getUserData);
 
 // Multer Configuration

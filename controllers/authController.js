@@ -11,7 +11,7 @@ const pool = new Pool({
   port: 5432, // PostgreSQL default port
 });
 
-// Controller for handling user login
+// Controller for handling Brand login
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
 };
 
 //
-// Controller for getting user's data
+// Controller for getting Brand User's data
 //
 
 const getUserData = async (req, res) => {
@@ -89,7 +89,7 @@ const getUserData = async (req, res) => {
 };
 
 //
-// Controller for handling user registration
+// Controller for handling Brand's User registration
 //
 
 // Controller for handling user registration

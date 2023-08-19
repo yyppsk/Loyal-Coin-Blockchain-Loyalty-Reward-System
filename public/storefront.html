@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css"
+            rel="stylesheet"
+            />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+            rel="stylesheet"
+            />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+              darkMode: "class",
+              theme: {
+                extend: {
+                  colors: {
+                    primary: {
+                      50: "#f0fdfa",
+                      100: "#ccfbf1",
+                      200: "#99f6e4",
+                      300: "#5eead4",
+                      400: "#2dd4bf",
+                      500: "#14b8a6",
+                      600: "#0d9488",
+                      700: "#0f766e",
+                      800: "#115e59",
+                      900: "#134e4a",
+                      950: "#042f2e",
+                    },
+                  },
+                },
+                fontFamily: {
+                  body: [
+                    "Inter",
+                    "ui-sans-serif",
+                    "system-ui",
+                    "-apple-system",
+                    "system-ui",
+                    "Segoe UI",
+                    "Roboto",
+                    "Helvetica Neue",
+                    "Arial",
+                    "Noto Sans",
+                    "sans-serif",
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji",
+                    "Segoe UI Symbol",
+                    "Noto Color Emoji",
+                  ],
+                  sans: [
+                    "Inter",
+                    "ui-sans-serif",
+                    "system-ui",
+                    "-apple-system",
+                    "system-ui",
+                    "Segoe UI",
+                    "Roboto",
+                    "Helvetica Neue",
+                    "Arial",
+                    "Noto Sans",
+                    "sans-serif",
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji",
+                    "Segoe UI Symbol",
+                    "Noto Color Emoji",
+                  ],
+                },
+              },
+            };
+        </script>
+    </head>
+    <body>
+        <div class="wrapper">
+            <nav class="border-gray-200 dark:border-gray-600 dark:bg-gray-900 bg-white">
+                <div
+                    class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4"
+                    >
+                    <a href="./store" class="flex items-center">
+                    <img id="logo_brand"
+                        src="./images/logo/logo-dark.svg"
+                        class="mr-3 h-12"
+                        alt="Brand Logo"
+                        />
+                    <span id="brandNameCurrent"
+                        class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+                        >LoyalCoin</span
+                        >
+                    </a>
+                    <button
+                        data-collapse-toggle="mega-menu-full"
+                        type="button"
+                        class="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm focus:outline-none focus:ring-2 md:hidden"
+                        aria-controls="mega-menu-full"
+                        aria-expanded="false"
+                        >
+                        <span class="sr-only">Open main menu</span>
+                        <svg
+                            class="h-5 w-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 17 14"
+                            >
+                            <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15"
+                                />
+                        </svg>
+                    </button>
+                    <div
+                        id="mega-menu-full"
+                        class="hidden w-full items-center justify-between font-medium md:order-1 md:flex md:w-auto"
+                        >
+                        <ul
+                            class="border-gray-100 bg-gray-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mt-4 flex flex-col rounded-lg border p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
+                            >
+                            <li>
+                                <a
+                                    href="#"
+                                    class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                    aria-current="page"
+                                    >Home</a
+                                    >
+                            </li>
+                            <li>
+                                <button
+                                    id="mega-menu-full-dropdown-button"
+                                    data-collapse-toggle="mega-menu-full-dropdown"
+                                    class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-600 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 flex w-full items-center justify-between rounded py-2 pl-3 pr-4 dark:text-white md:w-auto md:border-0 md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                    >
+                                    Company
+                                    <svg
+                                        class="ml-2.5 h-2.5 w-2.5"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 10 6"
+                                        >
+                                        <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="m1 1 4 4 4-4"
+                                            />
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                    >Marketplace</a
+                                    >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                    >Resources</a
+                                    >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                    >Contact</a
+                                    >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div
+                    id="mega-menu-full-dropdown"
+                    class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-600 mt-1 border-y shadow-sm md:bg-white"
+                    >
+                    <div
+                        class="text-gray-900 mx-auto grid max-w-screen-xl px-4 py-5 dark:text-white sm:grid-cols-2 md:px-6"
+                        >
+                        <ul>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                                    >
+                                    <div class="font-semibold">Online Stores</div>
+                                    <span class="text-gray-500 dark:text-gray-400 text-sm"
+                                        >Connect with third-party tools that you're already using.</span
+                                        >
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                                    >
+                                    <div class="font-semibold">Segmentation</div>
+                                    <span class="text-gray-500 dark:text-gray-400 text-sm"
+                                        >Connect with third-party tools that you're already using.</span
+                                        >
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                                    >
+                                    <div class="font-semibold">Marketing CRM</div>
+                                    <span class="text-gray-500 dark:text-gray-400 text-sm"
+                                        >Connect with third-party tools that you're already using.</span
+                                        >
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                                    >
+                                    <div class="font-semibold">Online Stores</div>
+                                    <span class="text-gray-500 dark:text-gray-400 text-sm"
+                                        >Connect with third-party tools that you're already using.</span
+                                        >
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                                    >
+                                    <div class="font-semibold">Segmentation</div>
+                                    <span class="text-gray-500 dark:text-gray-400 text-sm"
+                                        >Connect with third-party tools that you're already using.</span
+                                        >
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                                    >
+                                    <div class="font-semibold">Marketing CRM</div>
+                                    <span class="text-gray-500 dark:text-gray-400 text-sm"
+                                        >Connect with third-party tools that you're already using.</span
+                                        >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="bg-white">
+                <div
+                    class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+                    >
+                    <h2 class="sr-only">Products</h2>
+                    <div
+                        class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
+                        >
+                        <a href="#" class="group">
+                            <div
+                                class="aspect-h-1 aspect-w-1 bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg"
+                                >
+                                <img
+                                    src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
+                                    alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+                                    class="h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                            </div>
+                            <h3 class="text-gray-700 mt-4 text-sm">Earthen Bottle</h3>
+                            <p class="text-gray-900 mt-1 text-lg font-medium">$48</p>
+                        </a>
+                        <a href="#" class="group">
+                            <div
+                                class="aspect-h-1 aspect-w-1 bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg"
+                                >
+                                <img
+                                    src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg"
+                                    alt="Olive drab green insulated bottle with flared screw lid and flat top."
+                                    class="h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                            </div>
+                            <h3 class="text-gray-700 mt-4 text-sm">Nomad Tumbler</h3>
+                            <p class="text-gray-900 mt-1 text-lg font-medium">$35</p>
+                        </a>
+                        <a href="#" class="group">
+                            <div
+                                class="aspect-h-1 aspect-w-1 bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg"
+                                >
+                                <img
+                                    src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg"
+                                    alt="Person using a pen to cross a task off a productivity paper card."
+                                    class="h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                            </div>
+                            <h3 class="text-gray-700 mt-4 text-sm">Focus Paper Refill</h3>
+                            <p class="text-gray-900 mt-1 text-lg font-medium">$89</p>
+                        </a>
+                        <a href="#" class="group">
+                            <div
+                                class="aspect-h-1 aspect-w-1 bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 w-full overflow-hidden rounded-lg"
+                                >
+                                <img
+                                    src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg"
+                                    alt="Hand holding black machined steel mechanical pencil with brass tip and top."
+                                    class="h-full w-full object-cover object-center group-hover:opacity-75"
+                                    />
+                            </div>
+                            <h3 class="text-gray-700 mt-4 text-sm">
+                                Machined Mechanical Pencil
+                            </h3>
+                            <p class="text-gray-900 mt-1 text-lg font-medium">$35</p>
+                        </a>
+                        <!-- More products... -->
+                    </div>
+                </div>
+            </div>
+
+            <!--Dynamic Content Here -->
+            <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                <h2 class="sr-only">Products</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 prods">
+
+                    <!-- Product card -->
+                    <!--
+                    <div class="bg-white p-6 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105">
+                        <img src="path/to/product-image.jpg" alt="Product Image" class="w-full h-40 object-cover mb-4">
+                        <h3 class="text-lg font-semibold mb-2">Product Name</h3>
+                        <p class="text-gray-600 text-sm mb-2">Price: ₹XXXX</p>
+                        <p class="text-gray-600 text-sm mb-2">Reward: XX Tokens</p>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Add to Cart</button>
+                    </div>
+                  -->
+
+                    <!-- Repeat the above product card for each product in your database -->
+                </div>
+                <!--Wrapper Ends-->
+            </div>
+        </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+        <footer class="mx-auto mt-32 w-full max-w-container px-4 sm:px-6 lg:px-8">
+            <div class="border-t border-slate-900/5 py-10">
+                <svg class="mx-auto h-5 w-auto text-slate-900" aria-hidden="true" viewBox="0 0 160 24" fill="none">
+                    <path d="M18.724 1.714c-4.538 0-7.376 2.286-8.51 6.857 1.702-2.285 3.687-3.143 5.957-2.57 1.296.325 2.22 1.271 3.245 2.318 1.668 1.706 3.6 3.681 7.819 3.681 4.539 0 7.376-2.286 8.51-6.857-1.701 2.286-3.687 3.143-5.957 2.571-1.294-.325-2.22-1.272-3.245-2.32-1.668-1.705-3.6-3.68-7.819-3.68zM10.214 12c-4.539 0-7.376 2.286-8.51 6.857 1.701-2.286 3.687-3.143 5.957-2.571 1.294.325 2.22 1.272 3.245 2.32 1.668 1.705 3.6 3.68 7.818 3.68 4.54 0 7.377-2.286 8.511-6.857-1.702 2.286-3.688 3.143-5.957 2.571-1.295-.326-2.22-1.272-3.245-2.32-1.669-1.705-3.6-3.68-7.82-3.68z" class="fill-sky-400"></path>
+                    <path d="M51.285 9.531V6.857h-3.166v-3.6l-2.758.823v2.777h-2.348v2.674h2.348v6.172c0 3.343 1.686 4.526 5.924 4.011V17.22c-2.094.103-3.166.129-3.166-1.517V9.53h3.166zm12.087-2.674v1.826c-.97-1.337-2.476-2.16-4.468-2.16-3.472 0-6.357 2.931-6.357 6.763 0 3.805 2.885 6.763 6.357 6.763 1.992 0 3.498-.823 4.468-2.186v1.851h2.758V6.857h-2.758zM59.338 17.4c-2.297 0-4.034-1.723-4.034-4.114 0-2.392 1.736-4.115 4.034-4.115s4.034 1.723 4.034 4.115c0 2.391-1.736 4.114-4.034 4.114zM70.723 4.929c.97 0 1.762-.823 1.762-1.775 0-.977-.792-1.774-1.762-1.774s-1.762.797-1.762 1.774c0 .952.792 1.775 1.762 1.775zm-1.379 14.785h2.758V6.857h-2.758v12.857zm5.96 0h2.757V.943h-2.758v18.771zM95.969 6.857l-2.502 8.872-2.655-8.872h-2.63L85.5 15.73l-2.477-8.872h-2.91l4.008 12.857h2.707l2.68-8.665 2.656 8.665h2.706L98.88 6.857h-2.911zm6.32-1.928c.97 0 1.762-.823 1.762-1.775 0-.977-.792-1.774-1.762-1.774s-1.762.797-1.762 1.774c0 .952.792 1.775 1.762 1.775zm-1.379 14.785h2.758V6.857h-2.758v12.857zm12.674-13.191c-1.736 0-3.115.643-3.957 1.98V6.857h-2.758v12.857h2.758v-6.891c0-2.623 1.43-3.703 3.242-3.703 1.737 0 2.86 1.029 2.86 2.983v7.611h2.757V11.82c0-3.343-2.042-5.297-4.902-5.297zm17.982-4.809v6.969c-.971-1.337-2.477-2.16-4.468-2.16-3.473 0-6.358 2.931-6.358 6.763 0 3.805 2.885 6.763 6.358 6.763 1.991 0 3.497-.823 4.468-2.186v1.851h2.757v-18h-2.757zM127.532 17.4c-2.298 0-4.034-1.723-4.034-4.114 0-2.392 1.736-4.115 4.034-4.115 2.297 0 4.034 1.723 4.034 4.115 0 2.391-1.737 4.114-4.034 4.114z" fill="currentColor"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M145.532 3.429h8.511c.902 0 1.768.36 2.407 1.004.638.643.997 1.515.997 2.424v8.572c0 .909-.359 1.781-.997 2.424a3.394 3.394 0 01-2.407 1.004h-8.511a3.39 3.39 0 01-2.407-1.004 3.438 3.438 0 01-.997-2.424V6.857c0-.91.358-1.781.997-2.424a3.39 3.39 0 012.407-1.004zm-5.106 3.428c0-1.364.538-2.672 1.495-3.636a5.09 5.09 0 013.611-1.507h8.511c1.354 0 2.653.542 3.61 1.507a5.16 5.16 0 011.496 3.636v8.572a5.16 5.16 0 01-1.496 3.636 5.086 5.086 0 01-3.61 1.506h-8.511a5.09 5.09 0 01-3.611-1.506 5.164 5.164 0 01-1.495-3.636V6.857zm10.907 6.251c0 1.812-1.359 2.916-3.193 2.916-1.823 0-3.182-1.104-3.182-2.916v-5.65h1.633v5.52c0 .815.429 1.427 1.549 1.427 1.12 0 1.549-.612 1.549-1.428v-5.52h1.644v5.652zm1.72 2.748V7.457h1.644v8.4h-1.644z" fill="currentColor"></path>
+                </svg>
+                <p class="mt-5 text-center text-sm leading-6 text-slate-500">© 2023 Tailwind Labs Inc. All rights reserved.</p>
+                <div class="mt-16 flex items-center justify-center space-x-4 text-sm font-semibold leading-6 text-slate-700">
+                    <a href="/privacy-policy">Privacy policy</a>
+                    <div class="h-4 w-px bg-slate-500/20"></div>
+                    <a href="/changelog">Changelog</a>
+                </div>
+            </div>
+        </footer>
+      <!-- Modals for displaying product details -->
+      <div class="fixed inset-0 z-50 hidden overflow-auto bg-black bg-opacity-50" id="modal">
+        <div class="modal-container mx-auto p-6 mt-10 bg-white rounded-lg shadow-lg 
+        sm:w-[588px] sm:h-[584px] md:w-[800px] md:h-[520px] lg:w-[1200px] lg:h-[425px]">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold modal-title">Product Name</h2>
+            <button class="text-gray-500 hover:text-gray-700" id="closeModal">X</button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <img src="" alt="Product Image" class="w-full h-40 object-cover mb-4 modal-image object-cover md:w-48 md:h-auto mx-auto md:mx-0">
+            
+            <div id="details_item">
+              <p class="text-gray-600 text-sm mb-2 modal-price">Price: ₹XXXX</p>
+              <p class="text-gray-600 text-sm mb-2 modal-reward">Reward: XX Tokens</p>
+              <p class="text-gray-600 text-sm mb-2 modal-description">Product Description Lorem ipsum dolor sit amet...</p>
+              <!-- Inside your modal -->
+                <p class="text-green-500 text-sm mt-2 success-message hidden">Item added to cart!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const selectedBrand = urlParams.get('brand');
+            const productContainer = document.querySelector('.prods');
+            const modal = document.getElementById('modal');
+            const closeModalButton = document.getElementById('closeModal');
+            const modalTitle = document.querySelector('.modal-title');
+            const modalImage = document.querySelector('.modal-image');
+            const modalPrice = document.querySelector('.modal-price');
+            const modalReward = document.querySelector('.modal-reward');
+            const modalDescription = document.querySelector('.modal-description');
+
+
+            // Create a single modal add button outside the loop
+            const modalAddButton = document.createElement('button');
+            modalAddButton.className = 'bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 modal-add-button add-to-cart-button';
+            modalAddButton.textContent = 'Add to Cart';
+            details_item.appendChild(modalAddButton);
+
+    // Fetch products from API
+    const logoForSite = document.getElementById('logo_brand'); 
+    fetch('/api/fetchBrands')
+    .then(response => response.json())
+    .then(brands => {
+      // Assuming you want the logo of the first brand (you can adjust this logic)
+      // Find the selected brand using its brand_id
+      console.log(selectedBrand)
+      const currentBrand = brands.find(brand =>brand.brand_id === Number(selectedBrand));
+      if (currentBrand) {
+        // Set the selected brand's logo path as the src attribute of the img element
+        logoForSite.src = currentBrand.logo_path;
+        document.getElementById(`brandNameCurrent`).textContent =  currentBrand.name;
+      }
+    })
+    .catch(error => console.error(error));
+    fetch(`/api/StoreAllproducts?brand=${selectedBrand}`)
+  .then(response => response.json())
+  .then(products => {
+
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'bg-white p-6 rounded-lg shadow-md cursor-pointer transition-transform transform hover:scale-105';
+      
+
+      const image = document.createElement('img');
+      image.src = product.image_1;
+      image.alt = 'Product Image';
+      image.className = 'w-full h-40 object-cover mb-4';
+      image.style.objectPosition = '0 10%';
+    
+      const productName = document.createElement('h3');
+      productName.className = 'text-lg font-semibold mb-2';
+      productName.textContent = product.name;
+
+      const price = document.createElement('p');
+      price.className = 'text-gray-600 text-sm mb-2';
+      price.textContent = `Price: ₹${product.cost.toFixed(2)}`;
+
+      const reward = document.createElement('p');
+      reward.className = 'text-gray-600 text-sm mb-2';
+      reward.textContent = `Reward: ${product.tokens_reward} Tokens`;
+
+      card.addEventListener('click', () => {
+        modalTitle.textContent = product.name;
+        modalImage.src = product.image_2;
+        modalPrice.textContent = `Price: ₹${product.cost.toFixed(2)}`;
+        modalReward.textContent = `Reward: ${product.tokens_reward} Tokens`;
+        modalDescription.textContent = product.description;
+        modalAddButton.textContent = 'Add to Cart';
+        // Update the data-productId attribute of the modal add button
+        modalAddButton.dataset.productId = product.product_id;
+        modal.classList.remove('hidden');
+      });
+
+      card.appendChild(image);
+      card.appendChild(productName);
+      card.appendChild(price);
+      card.appendChild(reward);
+
+      productContainer.appendChild(card);
+    });
+  })
+  .catch(error => console.error(error));
+
+
+  const modalAddButtons = document.querySelectorAll('.modal-add-button');
+modalAddButtons.forEach(button => {
+  button.addEventListener('click', async () => {
+    const product_id = button.dataset.productId; // Get the product ID from the data attribute
+
+    try {
+      const authResponse = await fetch('/api/check-auth-common', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (authResponse.ok) {
+        const authData = await authResponse.json();
+        if (authData.isAuthorized) {
+          const user_id = authData.commonUser.id; // Get the user ID from the session
+
+          const requestBody = {
+            user_id: user_id,
+            product_id: product_id,
+            quantity: 1, // For simplicity, you can adjust this based on user input
+          };
+
+          const response = await fetch('/api/addToCart', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          });
+
+          if (response.ok) {
+            // Item added to cart successfully
+            Swal.fire({
+              icon: 'success',
+              title: 'Item Added to Cart',
+              text: 'The selected item has been added to your cart.',
+            });
+          } else {
+            // Handle error response
+            console.error('Error adding item to cart');
+            Swal.fire({
+              icon: 'Error',
+              title: 'Unable to Add!',
+              text: 'Error adding item to cart',
+            });
+          }
+        } else {
+          // User is not authorized, show an alert or redirect to login
+          Swal.fire({
+              icon: 'warning',
+              title: 'Unauthorized!',
+              text: 'You are not authorized! Please login',
+            });
+          console.error('You are not authorized');
+        }
+      } else {
+        Swal.fire({
+              icon: 'warning',
+              title: 'Verification Issue!!',
+              text: 'Error checking authentication!',
+            });
+        console.error('Error checking authentication');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
+
+
+    // Close modal when close button is clicked
+    closeModalButton.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+        </script>
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    </body>
+</html>

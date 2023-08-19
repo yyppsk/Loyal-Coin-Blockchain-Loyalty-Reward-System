@@ -534,6 +534,7 @@
             </li>
           </ul>
           <button
+            id="logoutButton"
             class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
           >
             <svg
@@ -604,4 +605,26 @@
       }
     });
   </script>
+  <script>
+    // Assuming you have included Axios in your project (you can add it using a CDN or npm)
+    document.addEventListener("DOMContentLoaded", () => {
+      const logoutButton = document.getElementById("logoutButton");
+
+      logoutButton.addEventListener("click", async () => {
+        try {
+          await axios.get("/logoutbrand"); // Make a request to the /logout route
+          // Redirect the user to the desired location after logout
+          window.location.href = "/brandlogin"; // Redirect to the home page or another appropriate location
+        } catch (error) {
+          console.error("Logout failed:", error);
+        }
+      });
+    });
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
 </header>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+      <h1 class="mb-4 text-3xl font-semibold">Add Product</h1>
+      <form id="addProductForm" class="rounded bg-white p-4 shadow">
+        <!-- Brand ID -->
+        <div class="mb-4">
+          <label for="brand_id" class="mb-1 block font-medium">Brand ID</label>
+          <input
+            type="text"
+            id="brand_id"
+            name="brand_id"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Name -->
+        <div class="mb-4">
+          <label for="name" class="mb-1 block font-medium">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Category -->
+        <div class="mb-4">
+          <label for="category" class="mb-1 block font-medium">Category</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Cost -->
+        <div class="mb-4">
+          <label for="cost" class="mb-1 block font-medium">Cost</label>
+          <input
+            type="text"
+            id="cost"
+            name="cost"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Discount -->
+        <div class="mb-4">
+          <label for="discount" class="mb-1 block font-medium">Discount</label>
+          <input
+            type="text"
+            id="discount"
+            name="discount"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Cost in Tokens -->
+        <div class="mb-4">
+          <label for="cost_in_tokens" class="mb-1 block font-medium"
+            >Cost in Tokens</label
+          >
+          <input
+            type="text"
+            id="cost_in_tokens"
+            name="cost_in_tokens"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Quantity -->
+        <div class="mb-4">
+          <label for="quantity" class="mb-1 block font-medium">Quantity</label>
+          <input
+            type="text"
+            id="quantity"
+            name="quantity"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Tokens Reward -->
+        <div class="mb-4">
+          <label for="tokens_reward" class="mb-1 block font-medium"
+            >Tokens Reward</label
+          >
+          <input
+            type="text"
+            id="tokens_reward"
+            name="tokens_reward"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <label for="description" class="mb-1 block font-medium"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            class="focus:border-blue-500 w-full rounded-lg border px-4 py-2 focus:outline-none"
+          ></textarea>
+        </div>
+
+        <!-- Drag and Drop Image Upload -->
+        <div class="mb-4">
+          <label class="mb-1 block font-medium">Images 1</label>
+          <div
+            id="imageDropZone1"
+            class="border-gray-400 drop-zone cursor-pointer rounded-lg border border-dashed p-4"
+          >
+            <p class="text-gray-400 text-center">
+              Drag and drop first image here or click to select
+            </p>
+            <input
+              type="file"
+              id="imageInput1"
+              name="images"
+              class="hidden"
+              multiple
+              accept="image/*"
+            />
+            <div class="image-preview mt-2 flex"></div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="mb-1 block font-medium">Images 2</label>
+          <div
+            id="imageDropZone2"
+            class="border-gray-400 drop-zone cursor-pointer rounded-lg border border-dashed p-4"
+          >
+            <p class="text-gray-400 text-center">
+              Drag and drop second image here or click to select
+            </p>
+            <input
+              type="file"
+              id="imageInput2"
+              name="images"
+              class="hidden"
+              multiple
+              accept="image/*"
+            />
+            <div class="image-preview mt-2 flex"></div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="bg-blue-500 hover:bg-blue-600 rounded py-2 px-4 text-white"
+        >
+          Add Product
+        </button>
+      </form>
+    </div>
+    <script src="productAddition.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </body>
+</html>

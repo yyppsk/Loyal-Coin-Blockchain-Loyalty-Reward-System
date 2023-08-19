@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Update logged-in user
     document.getElementById("loggedin").textContent = userAddress;
 
+    document.getElementById("connectMetamask").remove();
     // Fetch and update balance using app.js logic
     updateBalance(userAddress);
   } else {

@@ -1,12 +1,11 @@
 const express = require("express");
-//const multer = require("multer");
-//const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const app = express();
+const multer = require("multer");
 const authRoutes = require("./routes/authRoutes");
 const pool = require("./db.js"); // Update the path to the db.js file
-
+const fs = require("fs");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const webpack = require("webpack");
@@ -16,6 +15,21 @@ const bodyParser = require("body-parser"); // Import body-parser
 const tokenController = require("./tokenController.js");
 const tokenRequestsDataRouter = require("./tokenRequestsData.js");
 const updateTablesRouter = require("./updateTables.js");
+const fileUpload = require("express-fileupload");
+const brandsApi = require("./brands-fetch.js"); // Import the API router
+const bcrypt = require("bcrypt");
+//Middleware to increase the file size limit
+app.use(
+  bodyParser.json({
+    limit: "10mb",
+  })
+); // Adjust the limit as needed
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+    limit: "10mb",
+  })
+); // Adjust the limit as needed
 
 app.use(
   cors({
@@ -38,13 +52,462 @@ app.use(
     },
   })
 );
+
+// Session middleware for e-commerce users
+app.use(
+  session({
+    secret: "TOga36RgZP1a594g42wt0jze5dW8gRu9",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 3600000, // Cookie expiration time in milliseconds
+      httpOnly: true, // Cookie is only accessible via HTTP(S)
+      secure: false, // Set to 'true' if using HTTPS
+      sameSite: "strict", // Controls when cookies are sent
+      name: "ecommerce-session", // Set the session cookie name for e-commerce users
+    },
+  })
+);
 // Middleware
 app.use(express.static("public"));
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(bodyParser.json());
+
+app.get("/logoutbrand", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+    }
+    res.sendStatus(200); // Send a successful response
+  });
+});
+
+//------LOGIC FOR HANDLING THE REQURIED UPLOADS TO ECOM BY BRANDS----------
+
+// PUT (update) a product
+app.put("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    category,
+    cost,
+    discount,
+    cost_in_tokens,
+    quantity,
+    tokens_reward,
+    description,
+    image_1,
+    image_2,
+    // Add other fields here
+  } = req.body;
+
+  const updateFields = {};
+
+  if (name !== undefined) updateFields.name = name;
+  if (category !== undefined) updateFields.category = category;
+  if (cost !== undefined) updateFields.cost = cost;
+  if (discount !== undefined) updateFields.discount = discount;
+  if (cost_in_tokens !== undefined)
+    updateFields.cost_in_tokens = cost_in_tokens;
+  if (quantity !== undefined) updateFields.quantity = quantity;
+  if (tokens_reward !== undefined) updateFields.tokens_reward = tokens_reward;
+  if (description !== undefined) updateFields.description = description;
+  if (image_1 !== undefined) updateFields.image_1 = image_1;
+  if (image_2 !== undefined) updateFields.image_2 = image_2;
+  // Add other fields here
+
+  try {
+    if (Object.keys(updateFields).length === 0) {
+      return res.status(400).json({
+        error: "No valid fields provided for update",
+      });
+    }
+
+    const updateQuery = {
+      text: `UPDATE Products SET ${Object.keys(updateFields)
+        .map((key, index) => `"${key}" = $${index + 1}`)
+        .join(", ")} WHERE product_id = $${
+        Object.keys(updateFields).length + 1
+      }`,
+      values: Object.values(updateFields).concat(id),
+    };
+
+    await pool.query(updateQuery);
+
+    res.json({
+      message: "Product updated successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred",
+    });
+  }
+});
+
+// DELETE a product
+app.delete("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query("DELETE FROM Products WHERE product_id = $1", [id]);
+    res.json({
+      message: "Product deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred",
+    });
+  }
+});
+/////////////////////////////////Store Front ////////////////////////////////
+// API endpoint to fetch products for the StoreFront
+app.get("/api/StoreAllproducts", async (req, res) => {
+  const selectedBrand = req.query.brand;
+
+  try {
+    const query = `
+      SELECT * FROM products
+      WHERE brand_id = $1
+      LIMIT 8
+    `;
+    const values = [selectedBrand];
+
+    const { rows } = await pool.query(query, values);
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//API for handling the CART
+
+app.post("/api/addToCart", async (req, res) => {
+  const { user_id, product_id, quantity } = req.body;
+
+  const client = await pool.connect(); // Acquire a database connection
+
+  try {
+    // Start a transaction
+    await client.query("BEGIN");
+
+    // Check if the item is already in the user's cart
+    const existingCartItem = await client.query(
+      "SELECT quantity FROM Cart WHERE user_id = $1 AND product_id = $2",
+      [user_id, product_id]
+    );
+
+    if (existingCartItem.rows.length > 0) {
+      // Update the existing cart item's quantity
+      await client.query(
+        "UPDATE Cart SET quantity = $1 WHERE user_id = $2 AND product_id = $3",
+        [existingCartItem.rows[0].quantity + quantity, user_id, product_id]
+      );
+    } else {
+      // Insert the new cart item
+      await client.query(
+        "INSERT INTO Cart (user_id, product_id, quantity) VALUES ($1, $2, $3)",
+        [user_id, product_id, quantity]
+      );
+    }
+
+    // Commit the transaction
+    await client.query("COMMIT");
+
+    res.status(200).json({ message: "Item added to cart successfully" });
+  } catch (error) {
+    // If an error occurs, rollback the transaction
+    await client.query("ROLLBACK");
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  } finally {
+    // Release the database connection
+    client.release();
+  }
+});
+
+/////////////////////////////////Store Front End ////////////////////////////////
+
+// API to check if the user is logged in and authorized
+app.get("/api/check-auth-common", (req, res) => {
+  const isAuthorized = req.session.isEcommerceUser && req.session.commonUser;
+
+  res.json({
+    isAuthorized,
+    commonUser: req.session.commonUser,
+  });
+});
+//Adding Products to Brands
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const { brand_id, category, name } = req.body;
+    const formattedName = name.replace(/\s+/g, "").substring(0, 20);
+    const destinationPath = path.join(
+      "public/ecommerce/assets",
+      brand_id.toString(),
+      category,
+      formattedName
+    );
+    try {
+      // Create the directory if it doesn't exist
+      fs.mkdirSync(destinationPath, {
+        recursive: true,
+      });
+      cb(null, destinationPath);
+    } catch (error) {
+      console.error("Error creating directory:", error);
+      cb(error, null);
+    }
+  },
+  filename: (req, file, cb) => {
+    const uniqueId = Date.now();
+    const extension = path.extname(file.originalname);
+    const newFileName = `${uniqueId}${extension}`;
+    cb(null, newFileName);
+  },
+});
+const upload = multer({
+  storage,
+});
+
+//Common User Registeration API
+// API endpoint for user registration
+app.post("/api/registercommon", async (req, res) => {
+  try {
+    const { name, email, password, address, contact_details } = req.body;
+
+    // Check if the email is already registered
+    const existingUser = await pool.query(
+      "SELECT * FROM Users WHERE email = $1",
+      [email]
+    );
+    if (existingUser.rows.length > 0) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Insert user data into the database
+    const newUser = await pool.query(
+      "INSERT INTO Users (name, email, password, home_address, contact_details) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [name, email, hashedPassword, address, contact_details]
+    );
+
+    res.json({
+      message: "User registered successfully",
+      user: newUser.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//Common User Login API
+app.post("/api/commonlogin", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Query the database to find the user with the provided email
+    const user = await pool.query("SELECT * FROM Users WHERE email = $1", [
+      email,
+    ]);
+
+    if (user.rows.length > 0) {
+      // Compare the provided password with the hashed password from the database
+      const passwordMatch = await bcrypt.compare(
+        password,
+        user.rows[0].password
+      );
+
+      if (passwordMatch) {
+        // Set session data for the logged-in user
+        req.session.commonUser = {
+          id: user.rows[0].user_id,
+          email: user.rows[0].email,
+        };
+        // Set a specific property to identify e-commerce users
+        req.session.isEcommerceUser = true;
+
+        res.status(200).json({ message: "Login successful" });
+      } else {
+        res.status(401).json({ message: "Invalid email or password" });
+      }
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//Common User logout
+
+app.post("/api/commonlogout", (req, res) => {
+  // Destroy the session to log the user out
+  req.session.destroy((error) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error logging out" });
+    } else {
+      res.status(200).json({ message: "Logout successful" });
+    }
+  });
+});
+
+// Define the authenticateCommonUser middleware
+const authenticateCommonUser = (req, res, next) => {
+  if (req.session.isEcommerceUser && req.session.commonUser) {
+    return next();
+  } else {
+    res.redirect("/commonlogin");
+  }
+};
+
+app.get("/api/fetchUserInfo", authenticateCommonUser, async (req, res) => {
+  const user_id = req.session.commonUser.id;
+
+  try {
+    const userInfo = await pool.query(
+      "SELECT token_balance, blockchain_address FROM users WHERE user_id = $1",
+      [user_id]
+    );
+
+    res.json(userInfo.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/api/fetchCartItems", authenticateCommonUser, async (req, res) => {
+  const user_id = req.session.commonUser.id; // Get the user ID from the session
+
+  try {
+    const cartItems = await pool.query(
+      "SELECT products.*, cart.quantity FROM products JOIN cart ON products.product_id = cart.product_id WHERE cart.user_id = $1",
+      [user_id]
+    );
+
+    res.json(cartItems.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+/////////////////////////////////////STORE FRONT END - END //////////////////////////////
+
+//Add Products to the database in Product table
+app.post("/api/products", upload.array("images", 2), async (req, res) => {
+  try {
+    const {
+      brand_id,
+      name,
+      category,
+      cost,
+      discount,
+      cost_in_tokens,
+      quantity,
+      tokens_reward,
+      description,
+    } = req.body;
+    // Modify the image paths before storing in the database
+    const images = req.files.map((file) => file.path);
+    const image1 = images[0].slice(7);
+    const image2 = images[1].slice(7);
+    //console.log(image1);
+    // Insert product data into the database
+    const query = `INSERT INTO products (brand_id, name, category, cost, discount, cost_in_tokens, quantity, tokens_reward, description, image_1, image_2) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *`;
+    const values = [
+      brand_id,
+      name,
+      category,
+      cost,
+      discount,
+      cost_in_tokens,
+      quantity,
+      tokens_reward,
+      description,
+      image1,
+      image2,
+    ];
+    const result = await pool.query(query, values);
+
+    res.status(201).json({
+      product: result.rows[0],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while adding the product.",
+    });
+  }
+});
+
+// API endpoint to fetch categories
+app.get("/api/categories", (req, res) => {
+  const query = "SELECT DISTINCT category FROM products";
+
+  pool.query(query, (error, results) => {
+    if (error) {
+      console.error("Error fetching categories:", error);
+      return res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+
+    // Access the "rows" property to get the data array
+    const categories = results.rows.map((row) => row.category);
+    res.json(categories);
+  });
+});
+
+//Get details of Products
+app.get("/api/products", async (req, res) => {
+  try {
+    const query = "SELECT * FROM products";
+    const result = await pool.query(query);
+    res.status(200).json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while fetching products.",
+    });
+  }
+});
+//Count Products
+app.get("/api/productsCount", async (req, res) => {
+  try {
+    // Get the total number of rows in the Products table
+    const countQuery = "SELECT COUNT(*) FROM products";
+    const countResult = await pool.query(countQuery);
+    const totalRows = parseInt(countResult.rows[0].count);
+
+    res.status(200).json({
+      totalRows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while fetching product count.",
+    });
+  }
+});
+
+//------LOGIC FOR HANDLING THE REQURIED UPLOADS TO ECOM-------
 //Request Token Data
 app.use("/api", tokenRequestsDataRouter);
+
 // Serve the CSS file
 app.use(
   "/style.css",
@@ -57,7 +520,9 @@ app.get("/api/check-auth", (req, res) => {
   // Check if the user is authenticated
   const isAuthenticated = req.session.userId ? true : false;
   // Return authentication status
-  res.json({ isAuthenticated });
+  res.json({
+    isAuthenticated,
+  });
 });
 
 // Use webpack-dev-middleware with your webpack configuration
@@ -122,9 +587,52 @@ app.post("/api/updateBlockchainAddress", async (req, res) => {
     }
   } catch (error) {
     console.error("Error updating blockchain address:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({
+      error: "Internal server error",
+    });
   }
 });
+
+// Ecommerce Routes
+
+app.get("/cart", (req, res) => {
+  res.sendFile(__dirname + "/public/cart.html");
+});
+
+app.get("/checkout", (req, res) => {
+  res.sendFile(__dirname + "/public/checkout.html");
+});
+
+app.get("/profile", (req, res) => {
+  res.sendFile(__dirname + "/public/commonprofile.html");
+});
+app.get("/commonlogin", (req, res) => {
+  res.sendFile(__dirname + "/public/commonlogin.html");
+});
+app.get("/commonsignup", (req, res) => {
+  res.sendFile(__dirname + "/public/commonsignup.html");
+});
+
+app.get("/store", (req, res) => {
+  res.sendFile(__dirname + "/public/storefront.html");
+});
+
+app.get("/addproducts", (req, res) => {
+  res.sendFile(__dirname + "/public/addproducts.html");
+});
+
+app.get("/addedproducts", (req, res) => {
+  res.sendFile(__dirname + "/public/addedproducts.html");
+});
+app.get("/test", (req, res) => {
+  res.sendFile(__dirname + "/public/t.html");
+});
+app.get("/brandsdisplay", (req, res) => {
+  res.sendFile(__dirname + "/public/brands.html");
+});
+
+// Use the brands API
+app.use("/api", brandsApi);
 
 //dashboard 2
 app.get("/dashboard2", (req, res) => {
@@ -179,10 +687,14 @@ app.get("/getBalance", async (req, res) => {
       .call();
     // Convert balance from wei to FKC format
     const balanceInFKC = web3.utils.fromWei(balance, "ether");
-    res.json({ balance: balanceInFKC });
+    res.json({
+      balance: balanceInFKC,
+    });
   } catch (error) {
     console.error("Error fetching balance:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({
+      error: "Internal Server Error",
+    });
   }
 });
 // Route to handle 404 errors

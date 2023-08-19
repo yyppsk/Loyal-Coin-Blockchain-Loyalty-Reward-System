@@ -1,0 +1,688 @@
+<html lang="en" class="light">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.0/luxon.min.js"
+            integrity="sha512-CEsYEGfWy6KreZm224/wr+2uW1vQKuMXrufuEeeVtdXISdJo1LO1ZPewhpOdM+BKHk4lQ491cqzPWWOMmxURWQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+            ></script>
+        <script>
+            tailwind.config = {
+              darkMode: "class",
+              theme: {
+                extend: {
+                  colors: {
+                    primary: {"50":"#f0fdfa","100":"#ccfbf1","200":"#99f6e4","300":"#5eead4","400":"#2dd4bf","500":"#14b8a6","600":"#0d9488","700":"#0f766e","800":"#115e59","900":"#134e4a","950":"#042f2e"}
+                  }
+                },
+                fontFamily: {
+                  "body": ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "system-ui", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
+                  "sans": ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "system-ui", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
+                }
+              }
+            }
+        </script>
+        <link rel="stylesheet" href="https://d2s3ptptdai04x.cloudfront.net/53c76865-5493-47fe-b0ee-4e023979f4d1.css?Expires=1706536880&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9kMnMzcHRwdGRhaTA0eC5jbG91ZGZyb250Lm5ldC81M2M3Njg2NS01NDkzLTQ3ZmUtYjBlZS00ZTAyMzk3OWY0ZDEuY3NzIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzA2NTM2ODgwfX19XX0_&amp;Signature=rpryVK8k9l09GIX4I4AKRxhvF5W2rSw4nfCL~Eh~wLboa3B00U8MlEHnELlDY9uso2TeR0J42LEY4nUwJAZaWxnGgY60BaXul5buFbwi1cCzTNdLSA65eiRigqCKmc3bUVU8zjflkO6lKwMscBhEkA88u~SFJC19o7nrw9WtD7KpLMNAeUBlaghCbqpCV3CptcbMwmMxddE1V-QTewLa5G7XEQSzyoAhgkKkBMB2v3P4PWwAVcZCvfj-lim0Ik3HvVixcVdF~qzN2wflsMa7QqPXG6Vk~zE7QZMn5z~2yXkYOBANbe5q76KvIyv-ovERyl~mMj2Fx4ovC4u3HZXzEw__&amp;Key-Pair-Id=K2J5W1U51CTOXP">
+        <link rel="stylesheet" href="./ecommerce/addedProducts.css">
+    </head>
+    <body class="dark:bg-gray-900 bg-white" data-new-gr-c-s-check-loaded="14.1120.0" data-gr-ext-installed="">
+        <!-- Nav Starts -->
+        <nav class="border-gray-200 dark:bg-gray-900 bg-white">
+            <div
+                class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4"
+                >
+                <a href="./" class="flex items-center">
+                <img
+                    src="./images/logo/logo-dark.svg"
+                    class="mr-3 h-8"
+                    alt="Flowbite Logo"
+                    />
+                <span
+                    class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+                    >LCS</span
+                    >
+                </a>
+                <div class="flex items-center md:order-2">
+                    <button
+                        type="button"
+                        class="bg-gray-800 focus:ring-gray-300 dark:focus:ring-gray-600 mr-3 flex rounded-full text-sm focus:ring-4 md:mr-0"
+                        id="user-menu-button"
+                        aria-expanded="false"
+                        data-dropdown-toggle="user-dropdown"
+                        data-dropdown-placement="bottom"
+                        >
+                    <span class="sr-only">Open user menu</span>
+                    <span id="current_user">
+                    <img
+                        class="h-8 w-8 rounded-full"
+                        src="./images/user/user-02.png"
+                        alt="user photo"
+                        />
+                    </span>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                        class="divide-gray-100 dark:bg-gray-700 dark:divide-gray-600 z-50 my-4 hidden list-none divide-y rounded-lg bg-white text-base shadow"
+                        id="user-dropdown"
+                        >
+                        <div class="px-4 py-3">
+                            <span class="text-gray-900 block text-sm dark:text-white"
+                                ><span id="brand_rep_name">Bonnie Green</span></span
+                                >
+                            <span
+                                class="text-gray-500 dark:text-gray-400 block truncate text-sm"
+                                >Logged in as</span
+                                >
+                        </div>
+                        <ul class="py-2" aria-labelledby="user-menu-button">
+                            <li>
+                                <a
+                                    href="./"
+                                    class="text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 block px-4 py-2 text-sm dark:hover:text-white"
+                                    >Dashboard</a
+                                    >
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 block px-4 py-2 text-sm dark:hover:text-white"
+                                    >Sign out</a
+                                    >
+                            </li>
+                        </ul>
+                    </div>
+                    <button
+                        data-collapse-toggle="navbar-user"
+                        type="button"
+                        class="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm focus:outline-none focus:ring-2 md:hidden"
+                        aria-controls="navbar-user"
+                        aria-expanded="false"
+                        >
+                        <span class="sr-only">Open main menu</span>
+                        <svg
+                            class="h-5 w-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 17 14"
+                            >
+                            <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15"
+                                />
+                        </svg>
+                    </button>
+                </div>
+                <div
+                    class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+                    id="navbar-user"
+                    >
+                    <ul
+                        class="border-gray-100 bg-gray-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mt-4 flex flex-col rounded-lg border p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
+                        >
+                        <li>
+                            <a
+                                href="./"
+                                class="bg-blue-700 md:text-blue-700 md:dark:text-blue-500 block rounded py-2 pl-3 pr-4 text-white md:bg-transparent md:p-0"
+                                aria-current="page"
+                                >Home</a
+                                >
+                        </li>
+                        <li>
+                            <a
+                                href="/about"
+                                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                >About</a
+                                >
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                >Services</a
+                                >
+                        </li>
+                        <li>
+                            <a
+                                href="/requesttokens"
+                                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                >Pricing</a
+                                >
+                        </li>
+                        <li>
+                            <a
+                                href="/support"
+                                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                                >Contact</a
+                                >
+                        </li>
+                        <li>
+                            <button
+                                id="theme-toggle"
+                                type="button"
+                                class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-4"
+                                >
+                                <svg
+                                    id="theme-toggle-dark-icon"
+                                    class="hidden h-6 w-20"
+                                    fill="currentColor"
+                                    viewBox="0 0 26 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                    <path
+                                        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                        ></path>
+                                </svg>
+                                <svg
+                                    id="theme-toggle-light-icon"
+                                    class="hidden h-6 w-20"
+                                    fill="currentColor"
+                                    viewBox="0 0 26 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                    <path
+                                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        ></path>
+                                </svg>
+                            </button>
+                        </li>
+                    </ul>
+                    <button
+                        id="theme-toggle"
+                        type="button"
+                        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-4"
+                        >
+                        <svg
+                            id="theme-toggle-dark-icon"
+                            class="hidden h-5 w-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                            <path
+                                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                                ></path>
+                        </svg>
+                        <svg
+                            id="theme-toggle-light-icon"
+                            class="hidden h-5 w-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                            <path
+                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Nav Ends -->
+        <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
+            <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
+                <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
+                    <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
+                        <div class="flex items-center flex-1 space-x-4">
+                            <h5>
+                                <span class="text-gray-500">All Products:</span>
+                                <span class="dark:text-white"><span id="totalProducts">12345</span></span>
+                            </h5>
+                            <h5>
+                                <span class="text-gray-500">Total sales:</span>
+                                <span class="dark:text-white">$88.4k</span>
+                                <label for="category" class="mr-2 dark:text-white dark:bg-gray-800 ">Category:</label>
+                                <select id="categories" class="dark:bg-gray-800 dark:text-white border rounded px-2 py-1">
+                                    <option value="" class="dark:text-white dark:bg-gray-800 ">All categories</option>
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                            </h5>
+                        </div>
+                        <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                            <button type="button" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
+                                </svg>
+                                Add new product
+                            </button>
+                            <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+                                </svg>
+                                Update stocks 1/250
+                            </button>
+                            <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"></path>
+                                </svg>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div id="product-table"></div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-all" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-all" class="sr-only">checkbox</label>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-4 py-3">Product</th>
+                                    <th scope="col" class="px-4 py-3">Category</th>
+                                    <th scope="col" class="px-4 py-3">Cost</th>
+                                    <th scope="col" class="px-4 py-3">Discount</th>
+                                    <th scope="col" class="px-4 py-3">LCS Reward</th>
+                                    <th scope="col" class="px-4 py-3">Rating</th>
+                                    <th scope="col" class="px-4 py-3">Sales</th>
+                                    <th scope="col" class="px-4 py-3">Revenue</th>
+                                    <th scope="col" class="px-4 py-3">Last Update</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-4 px-4 py-3">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                        </div>
+                                    </td>
+                                    <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/benq-ex2710q.png" alt="iMac Front Image" class="w-auto h-8 mr-3">
+                                        Monitor BenQ EX2710Q
+                                    </th>
+                                    <td class="px-4 py-2">
+                                        <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">TV/Monitor</span>
+                                    </td>
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <div class="flex items-center">
+                                            <div class="inline-block w-4 h-4 mr-2 bg-green-500 rounded-full"></div>
+                                            1242
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">4.12</td>
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">0.30</td>
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <div class="flex items-center">
+                                            <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg aria-hidden="true" class="w-5 h-5 text-gray-300 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <span class="ml-1 text-gray-500 dark:text-gray-400">4.0</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <div class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2 text-gray-400" aria-hidden="true">
+                                                <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"></path>
+                                            </svg>
+                                            211K
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-2">$1.2M</td>
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Just now</td>
+                                </tr>
+                                <!--Rows Added Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav class="flex flex-col items-start justify-between p-4 space-y-3 md:flex-row md:items-center md:space-y-0" aria-label="Table navigation">
+                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                        Showing
+                        <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
+                        of
+                        <span class="font-semibold text-gray-900 dark:text-white">1000</span>
+                        </span>
+                        <ul class="inline-flex items-stretch -space-x-px">
+                            <li>
+                                <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <span class="sr-only">Previous</span>
+                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-current="page" class="z-10 flex items-center justify-center px-3 py-2 text-sm leading-tight border text-primary-600 bg-primary-50 border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                    <span class="sr-only">Next</span>
+                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+        <script>
+            fetch('/api/productsCount')
+            .then(response => response.json())
+            .then(data => {
+                const totalProductCount = data.totalRows;
+                document.getElementById('totalProducts').innerHTML = totalProductCount;
+            
+            })
+            .catch(error => {
+                
+            });
+            window.addEventListener("load", function(event) {
+            const links = document.querySelectorAll("a");
+            const buttons = document.querySelectorAll("button");
+            
+            links.forEach(function(link) {
+              link.addEventListener("click", function(ev) {
+                ev.preventDefault();
+              });
+            });
+            
+            buttons.forEach(function(button) {
+              button.addEventListener("click", function(ev) {
+                ev.preventDefault();
+              });
+            });
+            });
+        </script>
+        <script src="./js/darktheme.js"></script>
+        <script>
+            async function fetchCategories() {
+            try {
+                const response = await fetch('/api/categories');
+                const categories = await response.json();
+            
+                const categorySelect = document.getElementById('categories');
+                categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+            }
+            // Call the function to fetch and populate categories
+            fetchCategories();
+            
+             const productTable = new Tabulator("#product-table", {
+                columns: [
+                    { title: "Product ID", field: "product_id", sorter: "number"},
+                    { title: "Name", field: "name", sorter: "string", resizable: true  },
+                    { title: "Category", field: "category", sorter: "string" },
+                    { title: "Cost", field: "cost", sorter: "number" },
+                    { title: "Actions", formatter: actionButtons, headerSort: false, width: 200 },
+                        ],
+                        layout: "fitColumns",
+                        pagination: "local",
+                        paginationSize: 10,
+                        data: [], // Initialize with empty data
+                        initialSort: [
+                        { column: "name", dir: "asc" }, // Initial sorting by product name in ascending order
+                        ],
+                        initialFilter: [],
+                    });
+            
+                        // Custom formatter to generate action buttons
+                        function actionButtons(cell, formatterParams, onRendered) {
+                            const row = cell.getRow();
+                            const rowData = row.getData();
+                            const productId = rowData.product_id;
+                            return `<button class="edit-button" data-id="${productId}">Edit</button><button class="delete-button" data-id="${productId}">Delete</button>`;
+                        }
+            
+                        // Function to handle button clicks (Edit and Delete)
+                        document.addEventListener("click", async (e) => {
+                            if (e.target.classList.contains("edit-button")) {
+                            const row = e.target.closest(".tabulator-row");
+                            const productId = e.target.getAttribute("data-id");
+            
+                            const rowData = productTable.getRow(row).getData();
+            
+                            const inputFields = Object.keys(rowData).map((key) => {
+                                return `
+                                    <label for="${key}">${key}:</label>
+                                    <input type="text" id="${key}" value="${rowData[key]}" class="swal2-input">
+                                `;
+                            }).join('');
+            
+                        const { value: modifiedData, isConfirmed } = await Swal.fire({
+                            title: 'Edit Product',
+                            html: inputFields,
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const data = {};
+                                Object.keys(rowData).forEach((key) => {
+                                    data[key] = document.getElementById(key).value;
+                                });
+                                return data;
+                            },
+                            showCancelButton: true,
+                            confirmButtonText: 'Save',
+                        });
+            
+                    if (isConfirmed) {
+                        try {
+                            const response = await fetch(`/api/products/${productId}`, {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify(modifiedData),
+                            });
+                            if (response.ok) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Product data updated successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                fetchData(); // Refresh table data
+                            } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to update product data',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            }
+            else if (e.target.classList.contains("delete-button")) {
+            const productId = e.target.getAttribute("data-id");
+            
+            // Show a SweetAlert2 confirmation dialog
+            const { isConfirmed } = await Swal.fire({
+            icon: "warning",
+            title: "Confirm Deletion",
+            text: "Are you sure you want to delete this product?",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it",
+            cancelButtonText: "Cancel",
+            });
+            
+            if (isConfirmed) {
+            try {
+            const response = await fetch(`/api/products/${productId}`, {
+              method: "DELETE",
+            });
+            
+            if (response.ok) {
+              Swal.fire({
+                icon: "success",
+                title: "Product deleted successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              fetchData(); // Refresh table data
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Failed to delete product",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+            } catch (error) {
+            console.error(error);
+            }
+            }
+            }
+            });
+            //Display relative Date & Time
+            function getRelativeTime(targetISODate) {
+            // Get the target date to calculate relative time
+            const targetDate = luxon.DateTime.fromISO(targetISODate);
+            
+            // Get the current date and time using Luxon
+            const currentDateTime = luxon.DateTime.local();
+            
+            // Calculate the difference between the current date and the target date
+            const diff = currentDateTime.diff(targetDate).shiftTo('years', 'months', 'days', 'hours', 'minutes', 'seconds');
+            
+            // Extract years, months, days, hours, minutes, and seconds from the diff object
+            const { years, months, days, hours, minutes, seconds } = diff.toObject();
+            
+            // Create the relative time string
+            const relativeTimeString = `${days} days, ${hours} hours, ${minutes} minutes`;
+            
+            return relativeTimeString;
+            
+            }
+             // Fetch and load data into the table
+             async function fetchData() {
+                try {
+                    const response = await fetch('/api/products');
+                    const data = await response.json();
+                    productTable.setData(data);
+                    for(const ele of data){
+                        console.log(ele);
+                        const rowHtml= 
+                        `
+                        <td class="w-4 px-4 py-3">
+                            <div class="flex items-center">
+                                <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                            </div>
+                        </td>
+                        <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <img src="${ele.image_1}" alt="iMac Front Image" class="w-auto h-8 mr-3">
+                            ${ele.name}
+                        </th>
+                        <td class="px-4 py-2">
+                            <span class="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">${ele.category}</span>
+                        </td>
+                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <div class="flex items-center">
+                                <div class="inline-block w-4 h-4 mr-2 bg-green-500 rounded-full"></div>
+                                ${ele.cost}
+                            </div>
+                        </td>
+                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">${ele.discount}</td>
+                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">${ele.tokens_reward}</td>
+                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <div class="flex items-center">
+                                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <svg aria-hidden="true" class="w-5 h-5 text-gray-300 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <span class="ml-1 text-gray-500 dark:text-gray-400">4.0</span>
+                            </div>
+                        </td>
+                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2 text-gray-400" aria-hidden="true">
+                                    <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"></path>
+                                </svg>
+                                ${ele.sales}
+                            </div>
+                        </td>
+                        <td class="px-4 py-2">$0.0K</td>
+                        <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">${getRelativeTime(ele.updated_at)}</td>
+                    `
+            
+                        const option = document.createElement('tr');
+                        option.classList = "border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700";
+                        option.value = "ROW-DATA";
+                        option.innerHTML = rowHtml;
+                        const rowDynamic = document.getElementById("tableBody");
+                        rowDynamic.appendChild(option);
+                        
+                    }
+                    const selectedCategory = document.getElementById('categories').value;
+            
+                    // Create the initial filter object based on the selected category
+                    const initialFilter = selectedCategory
+                    ? [{ field: 'category', type: '=', value: selectedCategory }]
+                    : [];
+            
+                    // Initialize the Tabulator table with data and initial filter
+                    productTable.setData(data);
+                    productTable.setFilter(initialFilter);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            
+            // Load initial data
+            fetchData();
+        </script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    </body>
+</html>

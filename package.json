@@ -53,12 +53,16 @@
   },
   "dependencies": {
     "@alpinejs/persist": "^3.12.0",
+    "@sweetalert2/theme-borderless": "^5.0.15",
     "alpinejs": "^3.10.3",
     "apexcharts": "^3.36.3",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express-fileupload": "^1.4.0",
     "flatpickr": "^4.6.13",
     "http-proxy-middleware": "^2.0.6",
-    "jsvectormap": "^1.5.1"
+    "jsvectormap": "^1.5.1",
+    "sweetalert2": "^10.16.0"
   }
 }
