@@ -10,7 +10,38 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
 
     const amount = parseInt(document.getElementById("amount").value);
-
+    try {
+      const { value: formValues } = await Swal.fire({
+        title: 'Request Tokens',
+        html:
+          `<label for="amount">Amount of Tokens:</label>` +
+          `<input type="number" id="amount" class="swal2-input" value="${amount}" required>`,
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            amount: document.getElementById('amount').value
+          };
+        }
+      });
+  
+      if (formValues && formValues.amount) {
+        // Use formValues.amount for further processing
+  
+        // Example of displaying a success message using SweetAlert2
+        Swal.fire({
+          icon: 'info',
+          title: 'Payment',
+          text: 'Demo Payment Wall for Testing',
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Token request sent successfully. Waiting for approval.',
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
     try {
       const response = await fetch("/api/requestTokens", {
         method: "POST",
@@ -28,16 +59,36 @@ document.addEventListener("DOMContentLoaded", () => {
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
-          alert("Token request sent successfully. Waiting for approval.");
+          // Display success modal
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Token request sent successfully. Waiting for approval.',
+          });
         } else {
-          alert("Failed to send token request. Please try again.");
+          // Display failure modal
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to send token request. Please try again.',
+          });
         }
       } else {
-        alert("Failed to send token request. Please try again.");
+        // Display failure modal
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to send token request. Please try again.',
+        });
       }
     } catch (error) {
-      console.error("Error sending token request:", error);
-      alert("An error occurred while sending token request.");
+      console.error('Error sending token request:', error);
+      // Display error modal
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'An error occurred while sending token request.',
+      });
     }
   });
 });

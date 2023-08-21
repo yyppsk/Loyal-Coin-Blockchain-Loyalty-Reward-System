@@ -26,8 +26,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("Please install MetaMask or use a compatible browser.");
   }
 
-  const web3Instance = new Web3(provider);
-
   const contractAddress = "0xbA1DC9d7A26F2a81625eBD5f34Bb3EBfE6B30D87";
   const contractABI = [
     {
@@ -1162,7 +1160,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </span>`;
 
           destinationuserHtml.innerHTML = `${toAddress}`;
-          transactionButtonHtml.innerHTML = `<a href="./dashboard2">
+          transactionButtonHtml.innerHTML = `<a href="./superadmin">
           <button
             id="transactionButton"
             data-modal-hide="defaultModal"
@@ -1312,31 +1310,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 });
-
-/* 
-contractInstance.methods.balanceOf("
-0xFb711699531E44B37e3dE5259Ca1fe95d3bE9f6b").call()
-  .then(balance => {
-    console.log("Account 2 FKC balance:", balance);
-  })
-  .catch(error => {
-    console.error("Error:", error);
-  });
-
-*/
-// Route to handle the client request and return data for the balance of user
-// Route to handle the client request and return data for the balance of user
-// app.get("/getBalance", async (req, res) => {
-//   try {
-//     const userAddress = req.query.address; // Get user's address from the request
-//     const balance = await contractInstance.methods
-//       .balanceOf(userAddress)
-//       .call();
-//     // Convert balance from wei to FKC format
-//     const balanceInFKC = web3.utils.fromWei(balance, "ether");
-//     res.json({ balance: balanceInFKC });
-//   } catch (error) {
-//     console.error("Error fetching balance:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });

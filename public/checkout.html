@@ -3,23 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout</title>
+  <title>Checkout: LoyalCoin</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2/dist/tailwind.min.css" rel="stylesheet">
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.1.0/web3.min.js"
+  integrity="sha512-COI914Q0wT4y7lcjXOxq2fdsz6aOj8BcC2ojR1mwyLYpujAOjhaRdEgVVX2TFxirzLDpQD5CmEHwSu48VDJejg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+  ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  </script>
 </head>
-<body>
-  <h1>Checkout</h1>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-4">Checkout</h1>
 
-  <div id="cart-items">
-    <!-- Cart items will be dynamically added here using JavaScript -->
+    <div id="cart-items" class="bg-white p-4 rounded-lg shadow-md mb-4">
+      <!-- Cart items will be dynamically added here using JavaScript -->
+    </div>
+
+    <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+      <p class="text-lg font-medium mb-2">1 LCS : <span id="LCStoINR"></span> INR</p>
+      <p class="text-lg font-medium mb-2">Your Account LCS <span id="token-balance"></span></p>
+      <p class="text-lg font-medium mb-2">SQL INR : <span id="SQLtoken-INR"></span></p>
+      <p class="text-lg font-medium mb-2">LCS : <span id="token-LCS"></span></p>
+      <p class="text-lg font-medium mb-2">INR : <span id="token-INR"></span></p>
+      <p class="text-lg font-medium mb-2">ETH : <span id="token-ETH"></span></p>
+      <p class="text-lg font-medium mb-2">WEI : <span id="token-WEI"></span></p>
+
+      <p class="text-lg font-medium mb-2"><Span id="blockchain-address"></Span></p>
+      <p id="total-price" class="text-lg font-medium">Total Price: ₹0.00</p>
+    </div>
+    
+    <button id="apply-discount" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2">Apply Token Discount</button>
+
+    <button id="pay-now" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">Place Order</button>
   </div>
-  <p id="token-balance"></p>
-  <p id="blockchain-address"></p>
-  
-  <p id="total-price">Total Price: ₹0.00</p>
-
-  <button id="apply-discount">Apply Token Discount</button>
-
-  <button id="place-order">Place Order</button>
 
   <script src="./js/checkout.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>

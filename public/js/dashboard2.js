@@ -601,6 +601,23 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchTokenRequests();
  
 });
+
+fetch('/superadmindata')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('name').textContent = data.name;
+        document.getElementById('email').textContent = data.email;
+        document.getElementById('profilepic').innerHTML = `<img
+        class="h-9 w-9 rounded-full"
+        src="${data.profile_pic_address}"
+        alt="user photo"
+        />`
+        // Populate more details if needed
+      })
+      .catch(error => {
+        console.error('Error fetching superadmin details:', error);
+});
+
 fetchRequestsTotal();
  // ApexCharts options and config
  window.addEventListener("load", async function() {

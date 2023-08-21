@@ -3,12 +3,186 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Product</title>
+    <title>Add Product : LoyalCoin</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100">
+    <nav class="border-gray-200 dark:bg-gray-900 bg-white">
+      <div
+        class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4"
+      >
+        <a href="./" class="flex items-center">
+          <img
+            src="./images/logo/logo.svg"
+            class="mr-3 h-8"
+            alt="LCS Logo"
+          />
+          <span
+            class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+            >LCS</span
+          >
+        </a>
+        <div class="flex items-center md:order-2">
+          <button
+            type="button"
+            class="bg-gray-800 focus:ring-gray-300 dark:focus:ring-gray-600 mr-3 flex rounded-full text-sm focus:ring-4 md:mr-0"
+            id="user-menu-button"
+            aria-expanded="false"
+            data-dropdown-toggle="user-dropdown"
+            data-dropdown-placement="bottom"
+          >
+            <span class="sr-only">Open user menu</span>
+            <span id="current_user">
+
+            </span>
+          </button>
+          <!-- Dropdown menu -->
+          <div
+            class="divide-gray-100 dark:bg-gray-700 dark:divide-gray-600 z-50 my-4 hidden list-none divide-y rounded-lg bg-white text-base shadow"
+            id="user-dropdown"
+          >
+            <div class="px-4 py-3">
+              <span class="text-gray-900 block text-sm dark:text-white"
+                ><span id="brand_rep_name">Bonnie Green</span></span
+              >
+              <span
+                class="text-gray-500 dark:text-gray-400 block truncate text-sm"
+                >Logged in as</span
+              >
+            </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  href="./"
+                  class="text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 block px-4 py-2 text-sm dark:hover:text-white"
+                  >Dashboard</a
+                >
+              </li>
+
+              <li>
+                <a
+                  href="#"
+                  class="text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 block px-4 py-2 text-sm dark:hover:text-white"
+                  >Sign out</a
+                >
+              </li>
+            </ul>
+          </div>
+          <button
+            data-collapse-toggle="navbar-user"
+            type="button"
+            class="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm focus:outline-none focus:ring-2 md:hidden"
+            aria-controls="navbar-user"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="h-5 w-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+          id="navbar-user"
+        >
+          <ul
+            class="border-gray-100 bg-gray-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mt-4 flex flex-col rounded-lg border p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
+          >
+            <li>
+              <a
+                href="./"
+                class="bg-blue-700 md:text-blue-700 md:dark:text-blue-500 block rounded py-2 pl-3 pr-4 text-white md:bg-transparent md:p-0"
+                aria-current="page"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="/about"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="/branddisplay"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="/requesttokens"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >Pricing</a
+              >
+            </li>
+            <li>
+              <a
+                href="/support"
+                class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white dark:hover:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                >Contact</a
+              >
+            </li>
+            <li></li>
+          </ul>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-4"
+          >
+            <svg
+              id="theme-toggle-dark-icon"
+              class="hidden h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+              ></path>
+            </svg>
+            <svg
+              id="theme-toggle-light-icon"
+              class="hidden h-5 w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
     <div class="container mx-auto p-6">
-      <h1 class="mb-4 text-3xl font-semibold">Add Product</h1>
+      <h1 class="mb-4 text-3xl font-semibold text-center">Add Product to your Inventory</h1>
+      <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 mb-6 mr-6">
+        <a href="/addedproducts"
+        <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+            </svg>
+            View Inventory
+        </button>
+      </a>
+    </div>
       <form id="addProductForm" class="rounded bg-white p-4 shadow">
         <!-- Brand ID -->
         <div class="mb-4">

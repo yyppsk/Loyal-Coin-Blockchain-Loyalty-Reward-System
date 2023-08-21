@@ -18,7 +18,19 @@ const updateTablesRouter = require("./updateTables.js");
 const fileUpload = require("express-fileupload");
 const brandsApi = require("./brands-fetch.js"); // Import the API router
 const bcrypt = require("bcrypt");
+const stripe = require("stripe")(
+  "sk_test_51JN1E4SHC0onIwhSyeQElNAAvRLtAxqdP6ttXhHfoolgic5AfkuwLJb6QUcIKtkAv5fZFpOI1sglU1y7EOFbneov002A1y15KG"
+);
 //Middleware to increase the file size limit
+// Middleware
+app.use(express.static("public"));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
+
 app.use(
   bodyParser.json({
     limit: "10mb",
@@ -68,15 +80,24 @@ app.use(
     },
   })
 );
-// Middleware
-app.use(express.static("public"));
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-app.use(bodyParser.json());
+app.get("/api/user-details", async (req, res) => {
+  const sessionId = req.session.userId;
+  console.log(sessionId);
+  try {
+    const client = await pool.connect();
+    const query =
+      "SELECT * FROM brandrepresentatives WHERE representative_id = $1";
+    const result = await client.query(query, [sessionId]);
+    const user = result.rows[0];
+    client.release();
+
+    res.json(user);
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.get("/logoutbrand", (req, res) => {
   req.session.destroy((err) => {
@@ -86,7 +107,24 @@ app.get("/logoutbrand", (req, res) => {
     res.sendStatus(200); // Send a successful response
   });
 });
+app.post("/api/payment", async (req, res) => {
+  const { token, amount } = req.body;
 
+  try {
+    await stripe.charges.create({
+      amount,
+      currency: "inr", // Change this to your desired currency
+      description: "Test Payment",
+      source: token,
+    });
+
+    // Payment successful
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
 //------LOGIC FOR HANDLING THE REQURIED UPLOADS TO ECOM BY BRANDS----------
 
 // PUT (update) a product
@@ -165,8 +203,10 @@ app.delete("/api/products/:id", async (req, res) => {
     });
   }
 });
+
 /////////////////////////////////Store Front ////////////////////////////////
 // API endpoint to fetch products for the StoreFront
+
 app.get("/api/StoreAllproducts", async (req, res) => {
   const selectedBrand = req.query.brand;
 
@@ -398,7 +438,10 @@ app.get("/api/fetchCartItems", authenticateCommonUser, async (req, res) => {
       [user_id]
     );
 
-    res.json(cartItems.rows);
+    res.json({
+      user_id: user_id, // Include the user ID in the response
+      cartItems: cartItems.rows,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -406,6 +449,7 @@ app.get("/api/fetchCartItems", authenticateCommonUser, async (req, res) => {
 });
 
 /////////////////////////////////////STORE FRONT END - END //////////////////////////////
+/////INVOICE//////////middleware
 
 //Add Products to the database in Product table
 app.post("/api/products", upload.array("images", 2), async (req, res) => {
@@ -595,6 +639,39 @@ app.post("/api/updateBlockchainAddress", async (req, res) => {
 
 // Ecommerce Routes
 
+app.get("/api/fetchUserDetails", authenticateCommonUser, async (req, res) => {
+  const user_id = req.session.commonUser.id;
+
+  try {
+    const userDetails = await pool.query(
+      "SELECT name, email, contact_details, home_address FROM Users WHERE user_id = $1",
+      [user_id]
+    );
+
+    res.json(userDetails.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Update token balance for a user
+app.post("/api/updateTokenBalance", (req, res) => {
+  const { userId, newTokenBalance } = req.body;
+
+  // Update the token_balance field in the users table
+  const updateQuery = "UPDATE users SET token_balance = $1 WHERE user_id = $2";
+  pool.query(updateQuery, [newTokenBalance, userId], (err, result) => {
+    if (err) {
+      console.error("Error updating token balance:", err);
+      res.status(500).json({ error: "Failed to update token balance" });
+    } else {
+      console.log("Token balance updated successfully");
+      res.json({ message: "Token balance updated successfully" });
+    }
+  });
+});
+
 app.get("/cart", (req, res) => {
   res.sendFile(__dirname + "/public/cart.html");
 });
@@ -603,8 +680,8 @@ app.get("/checkout", (req, res) => {
   res.sendFile(__dirname + "/public/checkout.html");
 });
 
-app.get("/profile", (req, res) => {
-  res.sendFile(__dirname + "/public/commonprofile.html");
+app.get("/transactions", (req, res) => {
+  res.sendFile(__dirname + "/public/transactions.html");
 });
 app.get("/commonlogin", (req, res) => {
   res.sendFile(__dirname + "/public/commonlogin.html");
@@ -630,12 +707,14 @@ app.get("/test", (req, res) => {
 app.get("/brandsdisplay", (req, res) => {
   res.sendFile(__dirname + "/public/brands.html");
 });
-
+app.get("/successorder", (req, res) => {
+  res.sendFile(__dirname + "/public/confirmation.html");
+});
 // Use the brands API
 app.use("/api", brandsApi);
 
 //dashboard 2
-app.get("/dashboard2", (req, res) => {
+app.get("/superadmin", (req, res) => {
   const filePath = path.join(__dirname, "public", "dashboard2.html");
   res.sendFile(filePath);
 });
@@ -669,6 +748,20 @@ app.get("/dashboard", (req, res) => {
   }
 });
 
+app.get("/superadmindata", async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const query = "SELECT * FROM super_admin WHERE superadmin = true LIMIT 1";
+    const result = await client.query(query);
+    const superadmin = result.rows[0];
+    client.release();
+
+    res.json(superadmin);
+  } catch (error) {
+    console.error("Error fetching superadmin details:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 //Route for request Tokens
 app.post("/api/requestTokens", tokenController.requestTokens);
 

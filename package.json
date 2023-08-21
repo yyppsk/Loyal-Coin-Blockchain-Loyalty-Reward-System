@@ -1,7 +1,7 @@
 {
-  "name": "tailadmin-free",
+  "name": "loyalcoin",
   "version": "1.0.4",
-  "description": "TailAdmin is a high-quality, open-source, and free Tailwind CSS admin template that is perfect for creating data-rich backends, powerful web applications and dashboard-admin projects.",
+  "description": "Blockchain Based Rewarding System",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --open --config webpack.config.js",
@@ -10,9 +10,9 @@
   },
   "keywords": [],
   "author": {
-    "name": "TailAdmin",
-    "email": "hello@tailadmin.com",
-    "url": "https://tailadmin.com"
+    "name": "loyalcoin",
+    "email": "pranjalpratapsingh1@gmail.com",
+    "url": "https://github.com/yyppsk"
   },
   "license": "ISC",
   "devDependencies": {
@@ -63,6 +63,7 @@
     "flatpickr": "^4.6.13",
     "http-proxy-middleware": "^2.0.6",
     "jsvectormap": "^1.5.1",
+    "stripe": "^13.2.0",
     "sweetalert2": "^10.16.0"
   }
 }
