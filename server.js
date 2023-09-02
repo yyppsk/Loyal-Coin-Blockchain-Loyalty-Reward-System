@@ -15,7 +15,7 @@ const bodyParser = require("body-parser"); // Import body-parser
 const tokenController = require("./tokenController.js");
 const tokenRequestsDataRouter = require("./tokenRequestsData.js");
 const updateTablesRouter = require("./updateTables.js");
-const fileUpload = require("express-fileupload");
+// const fileUpload = require("express-fileupload");
 const brandsApi = require("./brands-fetch.js"); // Import the API router
 const bcrypt = require("bcrypt");
 const stripe = require("stripe")(
@@ -790,6 +790,88 @@ app.get("/getBalance", async (req, res) => {
     });
   }
 });
+
+//cart clear
+
+app.delete("/api/clearCart", authenticateCommonUser, async (req, res) => {
+  const user_id = req.session.commonUser.id;
+
+  try {
+    // Remove all items from the cart for the current user
+    await pool.query("DELETE FROM cart WHERE user_id = $1", [user_id]);
+
+    res.json({ message: "Cart cleared successfully" });
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.put(
+  "/api/updateCartItemQuantity/:productId",
+  authenticateCommonUser,
+  async (req, res) => {
+    const user_id = req.session.commonUser.id;
+    const productId = req.params.productId;
+    const { quantity } = req.body;
+
+    try {
+      // Check if the item exists in the cart
+      const cartItem = await pool.query(
+        "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
+        [user_id, productId]
+      );
+
+      if (cartItem.rows.length === 0) {
+        return res.status(404).json({ error: "Item not found in the cart" });
+      }
+
+      // Update the item's quantity
+      await pool.query(
+        "UPDATE cart SET quantity = $1 WHERE user_id = $2 AND product_id = $3",
+        [quantity, user_id, productId]
+      );
+
+      res.json({ message: "Item quantity updated successfully" });
+    } catch (error) {
+      console.error("Error updating item quantity:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+app.delete(
+  "/api/removeFromCart/:productId",
+  authenticateCommonUser,
+  async (req, res) => {
+    const user_id = req.session.commonUser.id;
+    const productId = req.params.productId;
+
+    try {
+      // Check if the item exists in the cart
+      const cartItem = await pool.query(
+        "SELECT * FROM cart WHERE user_id = $1 AND product_id = $2",
+        [user_id, productId]
+      );
+
+      if (cartItem.rows.length === 0) {
+        return res.status(404).json({ error: "Item not found in the cart" });
+      }
+
+      // Remove the item from the cart
+      await pool.query(
+        "DELETE FROM cart WHERE user_id = $1 AND product_id = $2",
+        [user_id, productId]
+      );
+
+      res.json({ message: "Item removed from cart successfully" });
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
 // Route to handle 404 errors
 app.use((req, res, next) => {
   const filePath = path.join(__dirname, "public", "404.html");

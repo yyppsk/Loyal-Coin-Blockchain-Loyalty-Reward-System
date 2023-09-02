@@ -12,14 +12,207 @@
   referrerpolicy="no-referrer"
   ></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-
+  
   </script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .colored-toast.swal2-icon-success {
+      background-color: #a5dc86 !important;
+    }
+
+    .colored-toast.swal2-icon-error {
+      background-color: #f27474 !important;
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
   <div class="container mx-auto p-6">
     <h1 class="text-4xl font-bold mb-4">Checkout</h1>
+    <script>
+        const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast'
+        },
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true
+      })
+      async function removeFromCart(productId) {
+              
+            try {
+              const response = await fetch(`/api/removeFromCart/${productId}`, {
+                method: 'DELETE',
+              });
+          
+              if (response.ok) {
+                // Item removed from cart successfully
+                const element = document.getElementById(`prod-handle-${productId}`);
+                element.remove();
+                
 
+                 //Try block for reducing balance by removed item
+                try {
+                  const response = await fetch('/api/fetchCartItems');
+                
+                      // Fetch user info (token balance and blockchain address)
+                  const userInfoResponse = await fetch('/api/fetchUserInfo');
+                  const userInfo = await userInfoResponse.json();
+                  
+                  if (response.ok) {
+                      const cartResponse = await fetch('/api/fetchCartItems');
+                      
+                      if (!cartResponse.ok) {
+                      throw new Error('Error fetching cart items');
+                      }
+
+                      const { user_id, cartItems } = await cartResponse.json();
+                      globalUser = user_id;
+                      //console.log('User ID:', user_id);
+                      //console.log('Cart Items:', cartItems);
+                      // Display cart items and calculate total price
+                      const cartContainer = document.querySelector('#cart-items');
+                      let totalPrice = 0;
+                      
+                        
+                      cartItems.forEach(item => {
+                          totalPrice += item.quantity * item.cost;
+                      });
+
+                      // Display total price
+                      const totalContainer = document.querySelector('#total-price');
+                      totalContainer.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
+                      } else {
+                        // Display SweetAlert error message
+                      // Swal.fire({
+                      //   icon: 'error',
+                      //   title: 'Error Fetching Cart Items',
+                      //   text: 'There was an error fetching the cart items. Please try again later.',
+                      // });
+                      }
+                    } catch (error) {
+                        // Display SweetAlert error message
+                        // Swal.fire({
+                        //   icon: 'error',
+                        //   title: 'An Error Occurred',
+                        //   text: 'An error occurred. Please try again later.',
+                        // });
+                        console.error(error);
+                    }
+                
+                //Display if item is removed
+                await Toast.fire({
+                  icon: 'success',
+                  title: 'Removed'
+                })
+                
+              } else {
+                await Toast.fire({
+                  icon: 'error',
+                  title: 'Cannot Remove'
+                })
+                // alert('Failed to remove item from cart. Please try again.');
+              }
+            } catch (error) {
+              await Toast.fire({
+                  icon: 'error',
+                  title: 'Cannot Remove'
+                })
+              console.error('Error removing item from cart:', error);
+              // alert('An error occurred while removing item from cart.');
+            }
+          }
+
+
+          async function updateQuantity(productId) {
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            const newQuantity = quantityInput.value;
+          
+            try {
+              const response = await fetch(`/api/updateCartItemQuantity/${productId}`, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ quantity: newQuantity }),
+              });
+          
+              if (response.ok) {
+                // Item quantity updated successfully
+                document.getElementById(`qty-dynamic-${productId}`).textContent = newQuantity;
+                try {
+                  const response = await fetch('/api/fetchCartItems');
+                
+                      // Fetch user info (token balance and blockchain address)
+                  const userInfoResponse = await fetch('/api/fetchUserInfo');
+                  const userInfo = await userInfoResponse.json();
+                  
+                  if (response.ok) {
+                      const cartResponse = await fetch('/api/fetchCartItems');
+                      
+                      if (!cartResponse.ok) {
+                      throw new Error('Error fetching cart items');
+                      }
+
+                      const { user_id, cartItems } = await cartResponse.json();
+                      globalUser = user_id;
+                      //console.log('User ID:', user_id);
+                      //console.log('Cart Items:', cartItems);
+                      // Display cart items and calculate total price
+                      const cartContainer = document.querySelector('#cart-items');
+                      let totalPrice = 0;
+                      
+                        
+                      cartItems.forEach(item => {
+                          totalPrice += item.quantity * item.cost;
+                      });
+
+                      // Display total price
+                      const totalContainer = document.querySelector('#total-price');
+                      totalContainer.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
+                      await Toast.fire({
+                        icon: 'success',
+                        title: 'Updated'
+                      })
+                      } else {
+                        // Display SweetAlert error message
+                      // Swal.fire({
+                      //   icon: 'error',
+                      //   title: 'Error Fetching Cart Items',
+                      //   text: 'There was an error fetching the cart items. Please try again later.',
+                      // });
+                      }
+                    } catch (error) {
+                        // Display SweetAlert error message
+                        // Swal.fire({
+                        //   icon: 'error',
+                        //   title: 'An Error Occurred',
+                        //   text: 'An error occurred. Please try again later.',
+                        // });
+                        console.error(error);
+                    }
+              } else {
+                await Toast.fire({
+                  icon: 'error',
+                  title: 'Cannot Update'
+                })
+                // alert('Failed to update quantity. Please try again.');
+              }
+            } catch (error) {
+              await Toast.fire({
+                  icon: 'error',
+                  title: 'Cannot Update'
+                })
+              console.error('Error updating quantity:', error);
+              // alert('An error occurred while updating quantity.');
+            }
+          }
+          </script>
     <div id="cart-items" class="bg-white p-4 rounded-lg shadow-md mb-4">
+      <div id="all-items-handle"></div>
       <!-- Cart items will be dynamically added here using JavaScript -->
     </div>
 
@@ -39,9 +232,44 @@
     <button id="apply-discount" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2">Apply Token Discount</button>
 
     <button id="pay-now" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">Place Order</button>
+    <button class="bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full" id="clearCartButton">Clear Cart</button>
   </div>
+  <script> 
+  // Assuming you have a button with the ID "clearCartButton"
+const clearCartButton = document.getElementById('clearCartButton');
 
+clearCartButton.addEventListener('click', async () => {
+  try {
+    const response = await fetch('/api/clearCart', {
+      method: 'DELETE',
+    });
+    
+    if (response.ok) {
+      const result = await response.json();
+      //all-items-handle
+      const element = document.getElementById(`all-items-handle`);
+      element.remove();
+      const totalContainer = document.querySelector('#total-price');
+        totalContainer.textContent = `Total Price: ₹0`;
+
+      await Toast.fire({
+        icon: 'success',
+        title: 'Cleared Cart'
+      })
+
+    } else {
+      await Toast.fire({
+        icon: 'error',
+        title: 'Cannot Clear Cart'
+      })
+      alert('Failed to clear cart. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+    alert('An error occurred while clearing the cart.');
+  }
+});
+</script>
   <script src="./js/checkout.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 </html>

@@ -832,6 +832,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           type: "function",
         },
       ]; 
+
+    //Main Cart handling
     try {
         const response = await fetch('/api/fetchCartItems');
        
@@ -840,7 +842,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const userInfo = await userInfoResponse.json();
 
 
-      if (response.ok) {;
+      if (response.ok) {
         const cartResponse = await fetch('/api/fetchCartItems');
         
         if (!cartResponse.ok) {
@@ -855,13 +857,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cartContainer = document.querySelector('#cart-items');
         let totalPrice = 0;
         
-  
+          
         cartItems.forEach(item => {
+            const allItems = document.getElementById("all-items-handle");
+            const maindiv = document.createElement('div');
             const itemDiv = document.createElement('div');
-            itemDiv.textContent = `${item.name} - ${item.quantity} x ₹${item.cost}`;
-            cartContainer.appendChild(itemDiv);
+            const itemDiv2 = document.createElement('div');
+            maindiv.setAttribute('id',`prod-handle-${item.product_id}`);
+            itemDiv2.innerHTML = `
+            
+            <div class="flex items-center space-x-2 mb-2 mt-2">
+              <input type="number" id="quantity-${item.product_id}" value="${item.quantity}" min="1" class="border rounded-md py-1 px-2 w-16">
+              <button onclick="updateQuantity(${item.product_id})" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-md">Update</button>
+              <button onclick="removeFromCart(${item.product_id})" class="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md">Remove</button>
+            </div>
+          `;
+            itemDiv.innerHTML = `${item.name} - <span id="qty-dynamic-${item.product_id}"> ${item.quantity} </span> x ₹${item.cost}`;
+            allItems.appendChild(maindiv);
+            maindiv.appendChild(itemDiv);
+            maindiv.appendChild(itemDiv2);
             totalPrice += item.quantity * item.cost;
           });
+
+          
+
+          
         // Display user's token balance and blockchain address
         const tokenBalanceContainer = document.querySelector('#token-balance');
         tokenBalanceContainer.textContent = `Available Tokens: ${userInfo.token_balance}`;
