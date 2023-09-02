@@ -73,6 +73,31 @@
               },
             };
         </script>
+
+        <style>
+          /* Style for the profile avatar */
+        .profile-avatar {
+          width: 50px;
+          height: 50px;
+          background-color: #007bff; /* You can customize the background color */
+          color: #fff; /* Text color */
+          font-size: 24px;
+          font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+        }
+
+        /* Additional styles for responsiveness */
+        @media (max-width: 768px) {
+          .profile-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+          }
+        }
+        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -88,7 +113,7 @@
                         />
                     <span id="brandNameCurrent"
                         class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
-                        >LoyalCoin</span
+                        ></span
                         >
                     </a>
                     <button
@@ -168,19 +193,56 @@
                                     >Resources</a
                                     >
                             </li>
-                            <li>
+                            
+                            <!--Information of cart in storefront : method pop over -->
+                              <div data-popover id="popover-user-profile" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+                                  <div class="p-3">
+                                      <div class="flex items-center justify-between mb-2">
+                                          <a href="#">
+                                              <span class="w-10 h-10 rounded-full profile-avatar" id="user-avatar"></span>
+                                          </a>
+                                          <div>
+                                              <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" id="clearCartButton">Clear Cart</button>
+                                          </div>
+                                      </div>
+                                      <p class="text-base font-semibold leading-none text-gray-900 dark:text-white">
+                                          <a href="#"><span id="current-user">Saksham Tiwari</a>
+                                      </p>
+                                      <p class="mb-3 text-sm font-normal">
+                                          <a href="#" class="hover:underline" id="email-id">@saksham</a>
+                                      </p>
+                                      <div id="cart-preview">
+                                        <div class="mb-4 text-sm" id="cart-items">Cart empty</div>
+                                      </div>
+                                      <ul class="flex text-sm">
+                                          <li class="mr-2">
+                                              <a href="#" class="hover:underline">
+                                                  <span class="font-semibold text-gray-900 dark:text-white">Cart Value: </span>
+                                                  <span id="total-price">0</span>
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <div data-popper-arrow></div>
+                              </div>
+
+                            <li data-popover-target="popover-user-profile" class="flex flex-row gap-2">
                                 <a
                                     href="/checkout"
                                     class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
                                     >Checkout</a
                                     >
+                                    <svg class="flex-1 w-8 h-8 fill-current" viewbox="0 0 24 24">
+                                      <path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>
+                                      </svg>
+                                      <span class="relative right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center" id="cart-value">5</span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div
                     id="mega-menu-full-dropdown"
-                    class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-600 mt-1 border-y shadow-sm md:bg-white"
+                    class="absolute w-full border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-600 mt-1 border-y shadow-sm md:bg-white z-10"
                     >
                     <div
                         class="text-gray-900 mx-auto grid max-w-screen-xl px-4 py-5 dark:text-white sm:grid-cols-2 md:px-6"
@@ -351,26 +413,13 @@
             </div>
         </div>
         </div>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
-        <footer class="mx-auto mt-32 w-full max-w-container px-4 sm:px-6 lg:px-8">
-            <div class="border-t border-slate-900/5 py-10">
-              <div style="display: flex; width: 100vh; align-items: center; display: flex;
-              width: 100vh;
-              align-content: flex-end;
-              justify-content: space-between;
-              position: relative;
-              left: -4rem;
-              flex-wrap: nowrap;
-              flex-direction: row-reverse;
-              align-items: stretch;"><img src="./images/logo/logo-dark.svg"></div>
-                <p class="mt-5 text-center text-sm leading-6 text-slate-500">© 2023  LoyalCoin Platform All rights reserved.</p>
-                <div class="mt-16 flex items-center justify-center space-x-4 text-sm font-semibold leading-6 text-slate-700">
-                    <a href="/displaybrands">Privacy policy</a>
-                    <div class="h-4 w-px bg-slate-500/20"></div>
-                    <a href="https://github.com/yyppsk">Changelog</a>
-                </div>
-            </div>
-        </footer>
+
+        <!--Footer-->
+        <div id="footer-placeholder"></div>
+
+
       <!-- Modals for displaying product details -->
       <div class="fixed inset-0 z-50 hidden overflow-auto bg-black bg-opacity-50" id="modal">
         <div class="modal-container mx-auto p-6 mt-10 bg-white rounded-lg shadow-lg 
@@ -392,6 +441,7 @@
           </div>
         </div>
       </div>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             const urlParams = new URLSearchParams(window.location.search);
             
@@ -411,6 +461,87 @@
             modalAddButton.className = 'bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 modal-add-button add-to-cart-button';
             modalAddButton.textContent = 'Add to Cart';
             details_item.appendChild(modalAddButton);
+
+            (async () => {
+              document.addEventListener("DOMContentLoaded", async () => {
+              try {
+                  const userDetailsResponse = await fetch("/api/fetchUserDetails");
+                  const userDetails = await userDetailsResponse.json();
+
+                  document.getElementById("current-user").textContent = userDetails.name;
+                  document.getElementById("email-id").textContent = userDetails.email;
+
+                  // Get the user's name (replace this with the actual user's name)
+                  const userName = userDetails.name;
+
+                  // Extract the first letter of the name
+                  const firstLetter = userName.charAt(0).toUpperCase();
+
+                  // Create a DOM element for the profile avatar
+                  const userAvatar = document.getElementById("user-avatar");
+                  userAvatar.textContent = firstLetter;
+
+                  // Add styles to make it look like an avatar
+                  userAvatar.classList.add("profile-avatar-style");
+
+                } catch (error) {
+                  console.error("Error fetching user details:", error);
+                  nameElement.textContent = "Error loading user details.";
+                }
+              });
+              try {
+                const response = await fetch('/api/fetchCartItems');
+
+                // Fetch user info (token balance and blockchain address)
+                const userInfoResponse = await fetch('/api/fetchUserInfo');
+                const userInfo = await userInfoResponse.json();
+
+                if (response.ok) {
+
+                  const cartResponse = await fetch('/api/fetchCartItems');
+
+                  if (!cartResponse.ok) {
+                    throw new Error('Error fetching cart items');
+                  }
+
+                  const { user_id, cartItems } = await cartResponse.json();
+                  globalUser = user_id;
+
+                  // Display cart items and calculate total price
+                  let totalPrice = 0;
+                  let totalItems = 0;
+                  const cartPreview = document.getElementById('cart-preview');
+                  cartPreview.textContent = "";
+                  cartItems.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add("cart-items-preview");
+                    itemDiv.innerHTML = `
+                                  <div class="flex flex-wrap items-center space-x-2 mb-2 mt-2">
+                                    ${item.name} - <span id="qty-dynamic-${item.product_id}"> ${item.quantity} </span> x ₹${item.cost}
+                                  </div>`;
+                    totalPrice += item.quantity * item.cost;
+                    totalItems += item.quantity;
+                    
+                    cartPreview.appendChild(itemDiv);
+                  });
+
+                  const cartvalue = document.getElementById("cart-value");
+                  cartvalue.textContent = totalItems;
+
+                  // Display total price
+                  const totalContainer = document.getElementById('total-price');
+                  totalContainer.textContent = `₹${totalPrice.toFixed(2)}`;
+                } else {
+                  // Handle the case where the fetch for cart items was not successful
+                  // Display SweetAlert error message or take other actions
+                }
+              } catch (error) {
+                // Handle errors
+                // Display SweetAlert error message or take other actions
+                console.error(error);
+              }
+            })();
+
 
     // Fetch products from API
     const logoForSite = document.getElementById('logo_brand'); 
@@ -473,23 +604,25 @@
       card.appendChild(reward);
 
       productContainer.appendChild(card);
+      
     });
   })
   .catch(error => console.error(error));
 
+  
 
-  const modalAddButtons = document.querySelectorAll('.modal-add-button');
-modalAddButtons.forEach(button => {
-  button.addEventListener('click', async () => {
-    const product_id = button.dataset.productId; // Get the product ID from the data attribute
+    const modalAddButtons = document.querySelectorAll('.modal-add-button');
+  modalAddButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const product_id = button.dataset.productId; // Get the product ID from the data attribute
 
-    try {
-      const authResponse = await fetch('/api/check-auth-common', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      try {
+        const authResponse = await fetch('/api/check-auth-common', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
       if (authResponse.ok) {
         const authData = await authResponse.json();
@@ -509,14 +642,73 @@ modalAddButtons.forEach(button => {
             },
             body: JSON.stringify(requestBody),
           });
-
+          
           if (response.ok) {
             // Item added to cart successfully
+             //Try block for reducing balance by removed item
+            
+             (async () => {
+              try {
+                const response = await fetch('/api/fetchCartItems');
+
+                // Fetch user info (token balance and blockchain address)
+                const userInfoResponse = await fetch('/api/fetchUserInfo');
+                const userInfo = await userInfoResponse.json();
+
+                if (response.ok) {
+                  const cartResponse = await fetch('/api/fetchCartItems');
+
+                  if (!cartResponse.ok) {
+                    throw new Error('Error fetching cart items');
+                  }
+
+                  const { user_id, cartItems } = await cartResponse.json();
+                  globalUser = user_id;
+
+                  // Display cart items and calculate total price
+                  let totalPrice = 0;
+                  let totalItems = 0;
+                  const cartPreview = document.getElementById('cart-preview');
+                  cartPreview.textContent = "";
+                  cartItems.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add("cart-items-preview");
+                    itemDiv.innerHTML = `
+                                  <div class="flex flex-wrap items-center space-x-2 mb-2 mt-2">
+                                    ${item.name} - <span id="qty-dynamic-${item.product_id}"> ${item.quantity} </span> x ₹${item.cost}
+                                  </div>`;
+                    totalPrice += item.quantity * item.cost;
+                    totalItems += item.quantity;
+                    
+                    cartPreview.appendChild(itemDiv);
+                  });
+
+                  const cartvalue = document.getElementById("cart-value");
+                  cartvalue.textContent = totalItems;
+
+                  // Display total price
+                  const totalContainer = document.getElementById('total-price');
+                  totalContainer.textContent = `₹${totalPrice.toFixed(2)}`;
+                } else {
+                  // Handle the case where the fetch for cart items was not successful
+                  // Display SweetAlert error message or take other actions
+                }
+              } catch (error) {
+                // Handle errors
+                // Display SweetAlert error message or take other actions
+                console.error(error);
+              }
+            })();
+
+
             Swal.fire({
               icon: 'success',
               title: 'Item Added to Cart',
               text: 'The selected item has been added to your cart.',
+              timer: 1000,
+              timerProgressBar: true
             });
+            
           } else {
             // Handle error response
             console.error('Error adding item to cart');
@@ -548,13 +740,58 @@ modalAddButtons.forEach(button => {
     }
   });
 });
-
-
     // Close modal when close button is clicked
     closeModalButton.addEventListener('click', () => {
       modal.classList.add('hidden');
     });
         </script>
-         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+        <script>
+
+      const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-right',
+              iconColor: 'white',
+              customClass: {
+                popup: 'colored-toast'
+              },
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true
+            })
+        const clearCartButton = document.getElementById('clearCartButton');
+        clearCartButton.addEventListener('click', async () => {
+    
+          try {
+            const response = await fetch('/api/clearCart', {
+              method: 'DELETE',
+            });
+            if (response.ok) {
+              const totalContainer = document.querySelector('#total-price');
+                totalContainer.textContent = `₹0`;
+              const cartvalue= document.getElementById("cart-value");
+                cartvalue.textContent = '0';
+              document.getElementById('cart-preview').textContent = 'Cart Empty';
+              await Toast.fire({
+                icon: 'success',
+                title: 'Cleared Cart'
+              })
+        
+            } else {
+              await Toast.fire({
+                icon: 'error',
+                title: 'Cannot Clear Cart'
+              })
+              alert('Failed to clear cart. Please try again.');
+            }
+          } catch (error) {
+            console.error('Error clearing cart:', error);
+            alert('An error occurred while clearing the cart.');
+          }
+        });
+          </script>
+
+         <script src="./js/footer-loader.js"></script>
     </body>
 </html>

@@ -857,7 +857,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cartContainer = document.querySelector('#cart-items');
         let totalPrice = 0;
         
-          
+        if (cartItems.length !== 0) {
+          // Cart is empty, you can display a message or take appropriate action
+          const carticon = document.getElementById("cart-icon");
+          carticon.classList.add('hidden');
+        }
+        else {
+          const carticon = document.getElementById("cart-icon");
+          carticon.classList.remove('hidden');
+        }
+        let totalItems = 0;
         cartItems.forEach(item => {
             const allItems = document.getElementById("all-items-handle");
             const maindiv = document.createElement('div');
@@ -877,8 +886,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             maindiv.appendChild(itemDiv);
             maindiv.appendChild(itemDiv2);
             totalPrice += item.quantity * item.cost;
+            totalItems += item.quantity;
           });
-
+          const cartvalue= document.getElementById("cart-value");
+          cartvalue.textContent = totalItems;
           
 
           

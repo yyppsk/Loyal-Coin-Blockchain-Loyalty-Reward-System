@@ -798,6 +798,7 @@ app.delete("/api/clearCart", authenticateCommonUser, async (req, res) => {
 
   try {
     // Remove all items from the cart for the current user
+    //todo -> add a logic to see if there are any items in the cart or not
     await pool.query("DELETE FROM cart WHERE user_id = $1", [user_id]);
 
     res.json({ message: "Cart cleared successfully" });

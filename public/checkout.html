@@ -14,7 +14,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
   
   </script>
-
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css"
+rel="stylesheet"
+/>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .colored-toast.swal2-icon-success {
@@ -27,6 +30,202 @@
   </style>
 </head>
 <body class="bg-gray-100">
+  
+
+<!--NavBar-->
+
+<nav class="border-gray-200 dark:border-gray-600 dark:bg-gray-900 bg-white">
+  <div
+      class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4"
+      >
+      <a href="./store" class="flex items-center">
+      <img id="logo_brand"
+          src="./images/logo/logo-dark.svg"
+          class="mr-3 h-12"
+          alt="Brand Logo"
+          />
+      <span id="brandNameCurrent"
+          class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white"
+          ></span
+          >
+      </a>
+      <button
+          data-collapse-toggle="mega-menu-full"
+          type="button"
+          class="text-gray-500 hover:bg-gray-100 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm focus:outline-none focus:ring-2 md:hidden"
+          aria-controls="mega-menu-full"
+          aria-expanded="false"
+          >
+          <span class="sr-only">Open main menu</span>
+          <svg
+              class="h-5 w-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+              >
+              <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                  />
+          </svg>
+      </button>
+      <div
+          id="mega-menu-full"
+          class="hidden w-full items-center justify-between font-medium md:order-1 md:flex md:w-auto"
+          >
+          <ul
+              class="border-gray-100 bg-gray-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 mt-4 flex flex-col rounded-lg border p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
+              >
+              <li>
+                  <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                      aria-current="page"
+                      >Home</a
+                      >
+              </li>
+              <li>
+                  <button
+                      id="mega-menu-full-dropdown-button"
+                      data-collapse-toggle="mega-menu-full-dropdown"
+                      class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-600 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 flex w-full items-center justify-between rounded py-2 pl-3 pr-4 dark:text-white md:w-auto md:border-0 md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                      >
+                      Company
+                      <svg
+                          class="ml-2.5 h-2.5 w-2.5"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 10 6"
+                          >
+                          <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="m1 1 4 4 4-4"
+                              />
+                      </svg>
+                  </button>
+              </li>
+              <li>
+                  <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                      >Marketplace</a
+                      >
+              </li>
+              <li>
+                  <a
+                      href="#"
+                      class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                      >Resources</a
+                      >
+              </li>
+              <li>
+                  <a
+                      href="/checkout"
+                      class="text-gray-900 hover:bg-gray-100 md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 dark:border-gray-700 block rounded py-2 pl-3 pr-4 dark:text-white md:p-0 md:hover:bg-transparent md:dark:hover:bg-transparent"
+                      >
+                      <li class="font-sans block mt-4 lg:inline-block lg:mt-0 lg:ml-3 align-middle text-black hover:text-gray-700">
+                        <a href="#" role="button" class="relative flex">
+                          <svg class="flex-1 w-8 h-8 fill-current" viewbox="0 0 24 24">
+                            <path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>
+                            </svg>
+                            <span class="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center" id="cart-value">5</span>
+                        </a>
+                      </li>
+                      </a>
+              </li>
+          </ul>
+      </div>
+  </div>
+  <div
+      id="mega-menu-full-dropdown"
+      class="absolute w-full border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-600 mt-1 border-y shadow-sm md:bg-white z-10"
+      >
+      <div
+          class="text-gray-900 mx-auto grid max-w-screen-xl px-4 py-5 dark:text-white sm:grid-cols-2 md:px-6"
+          >
+          <ul>
+              <li>
+                  <a
+                      href="#"
+                      class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                      >
+                      <div class="font-semibold">Online Stores</div>
+                      <span class="text-gray-500 dark:text-gray-400 text-sm"
+                          >Connect with third-party tools that you're already using.</span
+                          >
+                  </a>
+              </li>
+              <li>
+                  <a
+                      href="#"
+                      class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                      >
+                      <div class="font-semibold">Segmentation</div>
+                      <span class="text-gray-500 dark:text-gray-400 text-sm"
+                          >Connect with third-party tools that you're already using.</span
+                          >
+                  </a>
+              </li>
+              <li>
+                  <a
+                      href="#"
+                      class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                      >
+                      <div class="font-semibold">Marketing CRM</div>
+                      <span class="text-gray-500 dark:text-gray-400 text-sm"
+                          >Connect with third-party tools that you're already using.</span
+                          >
+                  </a>
+              </li>
+          </ul>
+          <ul>
+              <li>
+                  <a
+                      href="#"
+                      class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                      >
+                      <div class="font-semibold">Online Stores</div>
+                      <span class="text-gray-500 dark:text-gray-400 text-sm"
+                          >Connect with third-party tools that you're already using.</span
+                          >
+                  </a>
+              </li>
+              <li>
+                  <a
+                      href="#"
+                      class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                      >
+                      <div class="font-semibold">Segmentation</div>
+                      <span class="text-gray-500 dark:text-gray-400 text-sm"
+                          >Connect with third-party tools that you're already using.</span
+                          >
+                  </a>
+              </li>
+              <li>
+                  <a
+                      href="#"
+                      class="hover:bg-gray-100 dark:hover:bg-gray-700 block rounded-lg p-3"
+                      >
+                      <div class="font-semibold">Marketing CRM</div>
+                      <span class="text-gray-500 dark:text-gray-400 text-sm"
+                          >Connect with third-party tools that you're already using.</span
+                          >
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </div>
+</nav>
+
+<!--NavBar-->
   <div class="container mx-auto p-6">
     <h1 class="text-4xl font-bold mb-4">Checkout</h1>
     <script>
@@ -71,17 +270,31 @@
 
                       const { user_id, cartItems } = await cartResponse.json();
                       globalUser = user_id;
+
+                      
                       //console.log('User ID:', user_id);
                       //console.log('Cart Items:', cartItems);
                       // Display cart items and calculate total price
                       const cartContainer = document.querySelector('#cart-items');
                       let totalPrice = 0;
                       
-                        
+                      if (cartItems.length !== 0) {
+                        // Cart is empty, you can display a message or take appropriate action
+                        const carticon = document.getElementById("cart-icon");
+                        carticon.classList.add('hidden');
+                      }
+                      else {
+                        const carticon = document.getElementById("cart-icon");
+                        carticon.classList.remove('hidden');
+                      }
+                      
+                      let totalItems = 0;
                       cartItems.forEach(item => {
                           totalPrice += item.quantity * item.cost;
+                          totalItems += item.quantity;
                       });
-
+                      const cartvalue= document.getElementById("cart-value");
+                      cartvalue.textContent = totalItems;
                       // Display total price
                       const totalContainer = document.querySelector('#total-price');
                       totalContainer.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
@@ -165,11 +378,15 @@
                       const cartContainer = document.querySelector('#cart-items');
                       let totalPrice = 0;
                       
-                        
+                      let totalValue = 0;
                       cartItems.forEach(item => {
                           totalPrice += item.quantity * item.cost;
+                          totalValue+= item.quantity;
                       });
 
+                      const cartvalue= document.getElementById("cart-value");
+                      cartvalue.textContent = totalValue;
+                      
                       // Display total price
                       const totalContainer = document.querySelector('#total-price');
                       totalContainer.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
@@ -211,23 +428,49 @@
             }
           }
           </script>
-    <div id="cart-items" class="bg-white p-4 rounded-lg shadow-md mb-4">
-      <div id="all-items-handle"></div>
-      <!-- Cart items will be dynamically added here using JavaScript -->
+    <div id="cart-items" class="bg-white p-4 rounded-lg shadow-md mb-4" style="background-image: linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241));">
+      <div id="all-items-handle">
+        <span class="inline-flex space-between gap-2 hidden" id="cart-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+        </svg>
+        Nothing Here!
+      </span>
+      </div>
     </div>
-
-    <div class="bg-white p-4 rounded-lg shadow-md mb-4">
-      <p class="text-lg font-medium mb-2">1 LCS : <span id="LCStoINR"></span> INR</p>
-      <p class="text-lg font-medium mb-2">Your Account LCS <span id="token-balance"></span></p>
-      <p class="text-lg font-medium mb-2">SQL INR : <span id="SQLtoken-INR"></span></p>
-      <p class="text-lg font-medium mb-2">LCS : <span id="token-LCS"></span></p>
-      <p class="text-lg font-medium mb-2">INR : <span id="token-INR"></span></p>
-      <p class="text-lg font-medium mb-2">ETH : <span id="token-ETH"></span></p>
-      <p class="text-lg font-medium mb-2">WEI : <span id="token-WEI"></span></p>
-
-      <p class="text-lg font-medium mb-2"><Span id="blockchain-address"></Span></p>
-      <p id="total-price" class="text-lg font-medium">Total Price: ₹0.00</p>
+    
+    <div class="bg-white rounded-lg shadow-md p-4 mb-4" >
+      <!-- Card Header -->
+      <div class="text-xl font-semibold mb-4">Account Information</div>
+    
+      <!-- Account Balance -->
+      <div class="mb-4">
+        <p class="text-lg font-medium">1 LCS : <span id="LCStoINR"></span> INR</p>
+        <p class="text-lg font-medium">Your Account LCS : <span id="token-balance"></span></p>
+        <p class="text-lg font-medium">SQL INR : <span id="SQLtoken-INR"></span></p>
+      </div>
+    
+      <!-- Token Balances -->
+      <div class="mb-4">
+        <p class="text-lg font-medium">LCS : <span id="token-LCS"></span></p>
+        <p class="text-lg font-medium">INR : <span id="token-INR"></span></p>
+        <p class="text-lg font-medium">ETH : <span id="token-ETH"></span></p>
+        <p class="text-lg font-medium">WEI : <span id="token-WEI"></span></p>
+      </div>
+    
+      <!-- Blockchain Address -->
+      <div class="mb-4">
+        <p class="text-lg font-medium">Blockchain Address:</p>
+        <p id="blockchain-address" class="text-xl font-medium break-all">0x4054d837af425b23fb3f9ea22ad77fcabf39135e</p>
+      </div>
+    
+      <!-- Total Price -->
+      <div class="text-gray-700 py-2 px-4 rounded-lg hover:shadow-xl transition duration-300" style="background-image: linear-gradient(to right, rgb(255, 228, 230), rgb(204, 251, 241));">
+        <p class="text-lg font-medium">Total Price</p>
+        <p id="total-price" class="text-xl font-semibold">₹0.00</p>
+      </div>
     </div>
+    
     
     <button id="apply-discount" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2">Apply Token Discount</button>
 
@@ -236,22 +479,35 @@
   </div>
   <script> 
   // Assuming you have a button with the ID "clearCartButton"
-const clearCartButton = document.getElementById('clearCartButton');
-
-clearCartButton.addEventListener('click', async () => {
+  const clearCartButton = document.getElementById('clearCartButton');
+  const cartIcon = document.getElementById('cart-icon');
+  const cartMainArea = document.getElementById('cart-items');
+  clearCartButton.addEventListener('click', async () => {
+    
   try {
     const response = await fetch('/api/clearCart', {
       method: 'DELETE',
     });
     
+    
     if (response.ok) {
+      const nothingHere = document.createElement(`div`)
       const result = await response.json();
       //all-items-handle
       const element = document.getElementById(`all-items-handle`);
+      // element.appendChild();
       element.remove();
+      nothingHere.innerHTML = `<span class="inline-flex space-between gap-2" id="cart-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+        </svg>
+        Nothing Here!
+      </span>`;
+      cartMainArea.appendChild(nothingHere);
       const totalContainer = document.querySelector('#total-price');
         totalContainer.textContent = `Total Price: ₹0`;
-
+      const cartvalue= document.getElementById("cart-value");
+        cartvalue.textContent = '0';
       await Toast.fire({
         icon: 'success',
         title: 'Cleared Cart'
@@ -270,6 +526,10 @@ clearCartButton.addEventListener('click', async () => {
   }
 });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
   <script src="./js/checkout.js"></script>
+  <script src="./js/footer-loader.js"></script>
+   <!--Footer-->
+   <div id="footer-placeholder"></div>
 </body>
 </html>
